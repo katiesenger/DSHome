@@ -1,0 +1,60 @@
+[Fri Jan 15 19:58:34.093347 2016] [cgi:error] [pid 3442] [client 184.70.186.6:51700] AH01215: (8)Exec format error: exec of '/var/www/ekat.ca/Forms/index.html' failed, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 19:58:34.093661 2016] [cgi:error] [pid 3442] [client 184.70.186.6:51700] End of script output before headers: index.html, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 19:59:16.606310 2016] [cgi:error] [pid 3306] [client 184.70.186.6:51707] AH01215: (8)Exec format error: exec of '/var/www/ekat.ca/Forms/index.html' failed, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 19:59:16.606653 2016] [cgi:error] [pid 3306] [client 184.70.186.6:51707] End of script output before headers: index.html, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 19:59:19.548188 2016] [cgi:error] [pid 3342] [client 184.70.186.6:51708] AH01215: (8)Exec format error: exec of '/var/www/ekat.ca/Forms/index.html' failed, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 19:59:19.548621 2016] [cgi:error] [pid 3342] [client 184.70.186.6:51708] End of script output before headers: index.html, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 20:00:46.420930 2016] [ssl:warn] [pid 3793] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:00:46.420954 2016] [ssl:warn] [pid 3793] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:00:46.421159 2016] [ssl:warn] [pid 3793] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:00:46.421172 2016] [ssl:warn] [pid 3793] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:00:46.452661 2016] [ssl:warn] [pid 3794] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:00:46.452692 2016] [ssl:warn] [pid 3794] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:00:46.452976 2016] [ssl:warn] [pid 3794] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:00:46.452991 2016] [ssl:warn] [pid 3794] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:00:54.610375 2016] [authn_file:error] [pid 3798] (2)No such file or directory: [client 184.70.186.6:51725] AH01620: Could not open password file: /var/www/ekat.ca/Forms/public_html/.htpasswd, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 20:01:18.130102 2016] [ssl:warn] [pid 3850] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:01:18.130130 2016] [ssl:warn] [pid 3850] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:01:18.130424 2016] [ssl:warn] [pid 3850] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:01:18.130440 2016] [ssl:warn] [pid 3850] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:01:18.166365 2016] [ssl:warn] [pid 3851] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:01:18.166391 2016] [ssl:warn] [pid 3851] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:01:18.166595 2016] [ssl:warn] [pid 3851] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:01:18.166607 2016] [ssl:warn] [pid 3851] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:01:22.699314 2016] [cgi:error] [pid 3855] [client 184.70.186.6:51733] AH01215: (8)Exec format error: exec of '/var/www/ekat.ca/public_html/Forms/index.html' failed, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 20:01:22.699923 2016] [cgi:error] [pid 3855] [client 184.70.186.6:51733] End of script output before headers: index.html, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 20:02:45.150758 2016] [ssl:warn] [pid 3910] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:02:45.150781 2016] [ssl:warn] [pid 3910] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:02:45.151004 2016] [ssl:warn] [pid 3910] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:02:45.151017 2016] [ssl:warn] [pid 3910] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:02:45.185251 2016] [ssl:warn] [pid 3911] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:02:45.185284 2016] [ssl:warn] [pid 3911] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:02:45.185575 2016] [ssl:warn] [pid 3911] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:02:45.185592 2016] [ssl:warn] [pid 3911] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:03:23.795595 2016] [ssl:warn] [pid 3967] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:03:23.795620 2016] [ssl:warn] [pid 3967] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:03:23.795840 2016] [ssl:warn] [pid 3967] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:03:23.795854 2016] [ssl:warn] [pid 3967] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:03:23.830301 2016] [ssl:warn] [pid 3968] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:03:23.830332 2016] [ssl:warn] [pid 3968] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:03:23.830631 2016] [ssl:warn] [pid 3968] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:03:23.830647 2016] [ssl:warn] [pid 3968] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:03:36.704118 2016] [cgi:error] [pid 3972] [client 184.70.186.6:51749] AH01215: (8)Exec format error: exec of '/var/www/ekat.ca/public_html/Forms/index.html' failed, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 20:03:36.704492 2016] [cgi:error] [pid 3972] [client 184.70.186.6:51749] End of script output before headers: index.html, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 20:04:05.834726 2016] [cgi:error] [pid 3973] [client 61.160.213.55:1903] script not found or unable to stat: /usr/lib/cgi-bin/chs
+[Fri Jan 15 20:06:04.434872 2016] [cgi:error] [pid 3982] [client 184.70.186.6:51779] script not found or unable to stat: /var/www/ekat.ca/public_html/Forms/index.html, referer: http://45.79.163.192/ServiceRequest.php
+[Fri Jan 15 20:07:11.477273 2016] [auth_basic:error] [pid 3982] [client ::1:39215] AH01614: client used wrong authentication scheme: /Forms/
+[Fri Jan 15 20:10:33.619254 2016] [ssl:warn] [pid 4044] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:10:33.619283 2016] [ssl:warn] [pid 4044] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:10:33.619607 2016] [ssl:warn] [pid 4044] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:10:33.619625 2016] [ssl:warn] [pid 4044] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:10:33.660185 2016] [ssl:warn] [pid 4045] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:10:33.660218 2016] [ssl:warn] [pid 4045] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:10:33.660546 2016] [ssl:warn] [pid 4045] AH01906: RSA server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Jan 15 20:10:33.660573 2016] [ssl:warn] [pid 4045] AH01909: RSA certificate configured for www.ekat.ca:443 does NOT include an ID which matches the server name
+[Fri Jan 15 20:11:37.800373 2016] [:error] [pid 4059] [client ::1:39216] script '/var/www/ekat.ca/public_html/nosuchpage.php' not found or unable to stat
+[Fri Jan 15 20:17:20.195647 2016] [cgi:error] [pid 4058] [client 61.160.213.32:2692] script not found or unable to stat: /usr/lib/cgi-bin/chs
+[Fri Jan 15 20:30:52.357180 2016] [cgi:error] [pid 4058] [client 61.160.213.55:3270] script not found or unable to stat: /usr/lib/cgi-bin/chs
+[Fri Jan 15 20:36:50.205415 2016] [:error] [pid 4061] [client ::1:39229] PHP Notice:  Undefined index: TestCookie in /var/www/ekat.ca/public_html/setCookie.php on line 9
+[Fri Jan 15 20:44:28.813085 2016] [cgi:error] [pid 4057] [client 61.160.213.32:4421] script not found or unable to stat: /usr/lib/cgi-bin/chs
+[Fri Jan 15 20:44:29.755662 2016] [cgi:error] [pid 4049] [client 61.160.213.55:4438] script not found or unable to stat: /usr/lib/cgi-bin/chs

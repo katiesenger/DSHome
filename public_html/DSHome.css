@@ -1,0 +1,59 @@
+/*base*/
+body { background-color: white; font-size: 15px; color: black;}
+h1, h2, h3 { background-color: black; color: white; width: 100%; text-align: center;}
+
+.debug {color: blue; display:block;}
+
+.error {color: red;}
+
+#box, .box, .main, #main {position: absolute; left: 25%; top: 225px; border: solid thin black; width: 60%;}
+
+/*menu*/ 
+
+nav { 
+	position: absolute;
+	padding-top: 200px;
+	margin-top: 1%; 
+	width: 20%; 
+	text-align:left; 
+	background-color:silver; 
+	color: 
+black; 
+	z-index:10;
+}
+
+nav ul li { 
+	list-style:none;
+}
+
+.blackButton, .whiteButton, .greyButton { 
+	font-weight: bold; 
+	padding: 1%; 
+	text-align: left; 
+	width: 90%;
+}
+
+.blackButton:hover, .whiteButton:hover, .greyButton:hover {
+	color: red;
+}
+
+.blackButton { 
+	border: thin white solid; 
+	background-color: black; 
+	color: white;
+}
+
+.whiteButton { 
+	border: thin black solid;
+	background-color: white; 
+	width:100%; 
+	color: black;
+}
+
+
+.greyButton { 
+	border: thin black solid; 
+	background-color: grey; 
+	color: black;
+}
+
