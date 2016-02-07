@@ -15,6 +15,7 @@ InventoryID int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	InventoryLocationID int(11) NOT NULL,
 	InventoryOwnerID int(11) NOT NULL,
 	Picture1Location nvarchar(255),
-	Picture2Location nvarchar(255)
+	Picture2Location nvarchar(255),
+	DateSold datetime
 );
 

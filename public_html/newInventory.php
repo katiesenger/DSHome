@@ -26,6 +26,9 @@
 
 		<form method="post" action="addInventory.php" autocomplete="on" class="box">
 
+	<?php 
+			echo "<input type='hidden' name='userID' value='$userID' />"
+	?>
 			<p>Inventory Description: <input type="text" name="description" id="description" /></p>
 
 			<p>Inventory Type: 
