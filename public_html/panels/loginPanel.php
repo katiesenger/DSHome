@@ -1,4 +1,4 @@
-<div class="box">
+<div class="loginBox">
 
 	<form id="login" method="post" action="login.php" autocomplete="on" type="submit">
 

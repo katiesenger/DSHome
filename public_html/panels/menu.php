@@ -14,9 +14,7 @@
 <?php
 
  
-		$userID = "";
-
- 
+		$userID = ""; 
 		$userID = $_SERVER['QUERY_STRING'];
 		if(empty($userID)){
 

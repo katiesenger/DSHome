@@ -5,11 +5,9 @@
 	$table = $_GET['t'];
 	$idColumn  = $_GET['i'];
 	$checkValue = $_GET['v'];
-	$getColumn = $_GET['c'];
+	$checkColumn = $_GET['c'];
 	$friendly = $_GET['f'];
-	$showBeside=$_GET['b'];
-	
-	$checkStatement = "$friendly :: SELECT $getColumn FROM $table WHERE $idColumn='$checkValue'";
+	$checkStatement = "$friendly :: SELECT $idColumn FROM $table WHERE $checkColumn='$checkValue'";
 
 	echo "<p class='debug'>$checkStatment</p>";
 	include_once 'dbConnect.php';
