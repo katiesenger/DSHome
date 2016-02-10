@@ -5,9 +5,11 @@
 	$table = $_GET['t'];
 	$idColumn  = $_GET['i'];
 	$checkValue = $_GET['v'];
-	$checkColumn = $_GET['c'];
+	$getColumn = $_GET['c'];
 	$friendly = $_GET['f'];
-	$checkStatement = "$friendly :: SELECT $idColumn FROM $table WHERE $checkColumn='$checkValue'";
+	$showBeside=$_GET['b']; //1 or 0
+	
+	$checkStatement = "$friendly :: SELECT $getColumn FROM $table WHERE $idColumn='$checkValue'";
 
 	echo "<p class='debug'>$checkStatment</p>";
 	include_once 'dbConnect.php';
@@ -15,10 +17,16 @@
 	$existingResult = mysql_query($checkStatment, $database);
 	$rows = mysql_num_rows($existingResult);
 	if ($rows == 0) {
-	die("<p class='error'>$friendly does not contain $checkValue</p>");
+	echo "<p class='error'>$friendly does not contain $checkValue</p>";
 	}
 	else{
-	echo "<p class='debug'>$friendly contains $checkValue</p>";
+		if($showBeside==1)
+		{
+			echo "<th>$friendly</th><td>$rows[0]</td>";
+		}
+		else{
+			echo $rows[0];
+		}
 	}
 	mysql_close();
 ?>
