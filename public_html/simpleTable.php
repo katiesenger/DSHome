@@ -48,6 +48,16 @@
 		else{	return $rows[0]; }
 		mysql_close();
 	}
+	function getValue()
+	{
+		$checkStatement = "SELECT $nameColumn FROM $table WHERE $idColumn = '$value'";
+		$existingResult = mysql_query($checkStatment, $database);
+		$rows = mysql_num_rows($existingResult);
+		if ($rows == 0) {		return 0;	}
+		else{	return $rows[0]; }
+		mysql_close();
+	}
+	
 	function checkValueByID()
 	{
 		$checkStatement = "SELECT $idColumn FROM $table WHERE $idColumn = '$value'";
@@ -78,7 +88,7 @@
 			}
 			break;
 		case "add":
-			$value = $_POST['newValue'];
+			$value = $_POST['addNew'];
 			if(checkValueByName()==0)
 			{
 				$addQuery = "INSERT INTO $table($nameColumn) VALUES ('$value')";
@@ -90,6 +100,13 @@
 				echo "<p class='error'>$value already exists</p>";
 				listData();
 			}
+			break;
+		case "select":
+			$existingValue = getValue();
+			echo "<form id='edit' method='post' action='simpleTable.php?u=$userID&t=$table&action=edit' autocomplete='on' type='submit'>";
+			echo "Add $friendlyName: <input type='text' name='editValue' id='editValue' value='$existingValue' />";
+			echo "<input type='submit' name='add' value='add' />";
+			echo "</form>";
 			break;
 		case "edit":
 			$newValue = $_POST['editValue'];
@@ -143,7 +160,11 @@
 		}
 	}
 	
-?>
+	echo "<form id='add' method='post' action='simpleTable.php?u=$userID&t=$table&action=add' autocomplete='on' type='submit'>";
+	echo "Add $friendlyName: <input type='text' name='addNew' id='addNew' />";
+	echo "<input type='submit' name='add' value='add' />";
+	echo "</form>";
+	?>
 </div>
 </body>
 </html>
