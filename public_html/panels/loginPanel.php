@@ -1,6 +1,6 @@
 <div class="loginBox">
 
-	<form id="login" method="post" action="login.php" autocomplete="on" type="submit">
+	<form id="login" method="post" action="doLogin.php" autocomplete="on" type="submit">
 
 		<input type="hidden" name="userid" />
 

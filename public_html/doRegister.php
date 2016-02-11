@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<!--Index Page -->
+
+<head>
+	<meta charset="utf=8">
+	<title>DSHome.ca</title>
+	<link href="DSHome.css" rel="stylesheet" />
+</head>
+<body>
+	<h1>Welcome to DSHome.ca</h1>
+	<?php
+	$userID ="";
+	include_once './panels/menu.php';
+	?>
+	<div class='box'>
+		
 <?php
 	$pass1 = $pass2 = $username = $firstname = $lastname = $email = "";
 
@@ -32,7 +48,7 @@ $existingResult = mysql_query($existingQuery, $database);
 $rows = mysql_num_rows($existingResult);
 
 if (! $rows == 0) {
-	die("<p class='error'>User name or email already in use</p>");
+	die("<p class='error'>User name or email already in use</p><p><a href='register.php'>Return to registration</a></p>");
 }
 
 
@@ -67,7 +83,7 @@ if ( !($result = mysql_query($newUser,$database)))
 		echo "<p class='error'>UserID: $userid</p>";			
 
 		print("<H2>Login Completed</H2><p>Thanks $username, you have been logged in</p>");
-		print("<form method='post' name='getList' action='ServiceRequest.php' autocomplete='on'>");
+		print("<form method='post' name='getList' action='index.php' autocomplete='on'>");
 
 		print("<input type='hidden' name='userid' value='$userid' />");
 
@@ -77,3 +93,7 @@ if ( !($result = mysql_query($newUser,$database)))
 
 		<script language="JavaScript">document.getList.submit();</script>
 
+	</div>
+</body>
+
+</html>

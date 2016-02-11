@@ -8,7 +8,7 @@
 		<ul>
 
 
-			<li><a href="index.html" class="blackButton">Home</a></li>
+			<li><a href="index.php" class="blackButton">Home</a></li>
 
 	 
 <?php
@@ -18,7 +18,7 @@
 		$userID = $_SERVER['QUERY_STRING'];
 		if(empty($userID)){
 
-			echo "<p class='error'>Please <a href='login.html'>Log in</a> to continue.</p>";
+			echo "<p class='error'>Please <a href='login.php'>Log in</a> to continue.</p>";
 			include_once 'loginPanel.php';		
 		}
 

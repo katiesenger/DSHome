@@ -44,7 +44,7 @@
 		echo "<p class='error'>UserID: $userid</p>";			
 
 		print("<H2>Login Completed</H2><p>Thanks $username, you have been logged in</p>");
-		print("<form method='post' name='getList' action='ServiceRequest.php' autocomplete='on'>");
+		print("<form method='post' name='getList' action='home.php?$userid' autocomplete='on'>");
 
 		print("<input type='hidden' name='userid' value='$userid' />");
 
