@@ -1,5 +1,5 @@
 <?php
-$database = mysql_connect("localhost","prof","ds");
+$database = mysql_connect("localhost","dsh","dsh");
 if(! $database)
 {
      die('Connection Problem: '.mysql_error());
