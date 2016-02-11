@@ -11,5 +11,5 @@
 		<br /><input type="submit" />
 	</form>
 
-	<p>Not registered yet? <a href='register.html'>Register here.</a></p>
+	<p>Not registered yet? <a href='register.php'>Register here.</a></p>
 </div>
