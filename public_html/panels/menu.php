@@ -29,7 +29,7 @@
 			echo "<li><a href='./Forms/index.php' class='whiteButton'>Forms</a></li>";
 			echo "<li><a href='contact.php' class='whiteButton'>Contact Us</a></li>";
 			echo "<li><a href='logout.php' class='whiteButton'>Log out</a></li>";
-			echo "<li><a href='newInventory.php' class='whiteButton'>New Inventory</a></li>";
+			echo "<li><a href='inventory.php' class='whiteButton'>Inventory</a></li>";
 			
 }
 
