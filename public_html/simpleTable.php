@@ -9,21 +9,22 @@
 <body>
 	<h2>Inventory</h2>
 <?php
-	$userID = "";
+	include_once './panels/getVariables.php';
+	$userID = $table = $action = $value = $id = "";
 	$userID = $_POST["userid"];
 	if($userID == "")
 	{
 		$qString = $_SERVER['QUERY_STRING'];
-		$userID = $_GET['u'];
-		$table = $_GET['t'];
-		$action = $_GET['action']; //list, select, sort, add, edit, delete
-		$value = $_GET['v'];
-		$id = $_GET['i'];
+		$userID = getQString('u');
+		$table = getQString('t');
+		$action = getQString('action'); //list, select, sort, add, edit, delete
+		$value = getQString('v');
+		$id = getQString('i');
 		
 		$friendlyName = $columnName = $idColumn = $nameColumn ="";
 		$words = preg_split('/(?=[A-Z])/',$table);
 		$count = count($words);
-		for($i=0,$i<=count,$i++)
+		for($i=0;$i<=count;$i++)
 		{
 			if($words[$i]=="t")
 				$i++;
