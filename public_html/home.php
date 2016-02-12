@@ -11,7 +11,7 @@
 	<?php
 	$userID ="";
   $userID = $_POST['userid'];
-	include_once './panels/menu.php';
+	include_once './panels/menu.php;
 	echo "<form><input type='hidden' name='userid' id='userid' value='$userID' /></form>";
 	?>
 

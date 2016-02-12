@@ -11,7 +11,7 @@
 <?php
 	include_once './panels/getVariables.php';
 	$userID = $table = $action = $value = $id = "";
-	$userID = $_POST["userid"];
+	$userID = getPost("userid");
 	if($userID == "")
 	{
 		$qString = $_SERVER['QUERY_STRING'];
@@ -24,45 +24,54 @@
 		$friendlyName = $columnName = $idColumn = $nameColumn ="";
 		$words = preg_split('/(?=[A-Z])/',$table);
 		$count = count($words);
-		for($i=0;$i<=count;$i++)
+		echo "<p class='debug'>$table has $count pieces</p>";
+		for($i=0;$i<$count;$i++)
 		{
 			if($words[$i]=="t")
 				$i++;
+			echo "<p class='debug'>$i: $words[$i]</p>";
 			$friendlyName=$friendlyName . " " . $words[$i];
 			$columnName = $columnName . $words[$i];
+			
 		}
 		$idColumn = $columnName . "ID";
 		$nameColumn = $columnName . "Name";
 	}
-	include_once 'panels/menu.php?$userID';
+	include_once './panels/menu.php';
 	
 	echo "<div class='box'>";
 	
 	include_once 'dbConnect.php';
 
-	function checkValueByName()
+	function checkValueByName($table,$idColumn,$nameColumn,$value)
 	{
+		include_once 'dbConnect.php';
 		$checkStatement = "SELECT $idColumn FROM $table WHERE $nameColumn = '$value'";
-		$existingResult = mysql_query($checkStatment, $database);
+		echo "<p class='debug'>$checkStatement</p>";
+		$existingResult = mysql_query($checkStatement);
 		$rows = mysql_num_rows($existingResult);
 		if ($rows == 0) {		return 0;	}
 		else{	return $rows[0]; }
 		mysql_close();
 	}
-	function getValue()
+	function getValue($table,$idColumn,$nameColumn,$value)
 	{
+		include_once 'dbConnect.php';
 		$checkStatement = "SELECT $nameColumn FROM $table WHERE $idColumn = '$value'";
-		$existingResult = mysql_query($checkStatment, $database);
+		echo "<p class='debug'>$checkStatement</p>";
+		$existingResult = mysql_query($checkStatement);
 		$rows = mysql_num_rows($existingResult);
 		if ($rows == 0) {		return 0;	}
 		else{	return $rows[0]; }
 		mysql_close();
 	}
 	
-	function checkValueByID()
+	function checkValueByID($table,$idColumn,$nameColumn,$value)
 	{
+		include_once 'dbConnect.php';
 		$checkStatement = "SELECT $idColumn FROM $table WHERE $idColumn = '$value'";
-		$existingResult = mysql_query($checkStatment, $database);
+		echo "<p class='debug'>$checkStatement</p>";
+		$existingResult = mysql_query($checkStatement);
 		$rows = mysql_num_rows($existingResult);
 		if ($rows == 0) {		return 0;	}
 		else{	return $rows[0]; }
@@ -77,9 +86,14 @@
 			$listQuery = "SELECT $idColumn, $nameColumn FROM $table ORDER BY $value";
 			break;
 		case "delete":
-			if(checkValueByID()==$value)
+			if(empty($value) and !empty($id))
 			{
-				$deleteQuery = "DELETE FROM $table WHERE $idColumn=$value";
+				$value = $id;
+			}
+			if(checkValueByID($table,$idColumn,$nameColumn,$value)==$value)
+			{
+				$deleteQuery = "DELETE FROM $table WHERE $idColumn='$value'";
+				echo "<p class='debug'>$deleteQuery</p>";
 				if ( !( $result = mysql_query( $deleteQuery) ) ) {
 					echo "<p class='error'>Could not remove $value  " . mysql_error() . "</p>";
 				}
@@ -90,9 +104,10 @@
 			break;
 		case "add":
 			$value = $_POST['addNew'];
-			if(checkValueByName()==0)
+			if(checkValueByName($table,$idColumn,$nameColumn,$value)==0)
 			{
 				$addQuery = "INSERT INTO $table($nameColumn) VALUES ('$value')";
+				echo "<p class='debug'>$addQuery</p>";
 				if ( !( $result = mysql_query( $addQuery) ) ) {
 					echo "<p class='error'>Could not add $value " . mysql_error() . "</p>";
 				}
@@ -132,16 +147,17 @@
 			}
 	
 	}
-	listData();
-	function listData()
+	listData($listQuery,$friendlyName,$table,$userID);
+	function listData($listQuery,$friendlyName,$table,$userID)
 	{
-	
+		include_once 'dbConnect.php';
+		echo "<p class='debug'>$listQuery</p>";
 		if ( !( $result = mysql_query( $listQuery) ) ) {
 			echo "<p class='error'>Could not find $friendlyName listing " . mysql_error() . "</p>";
 		}
 		else {
 			echo "<h2>$friendlyName</h2>";
-			$data = mysql_query( $listQuery,$database);
+			$data = mysql_query( $listQuery);
 			echo "<form><table class='displayData'>";
 			// printing table rows
 			echo "<tr><th>&nbsp;</th><th>ID</th><th>Name</th></tr>\n";
@@ -149,6 +165,7 @@
 			{
 			  echo "<tr>";
 				echo "<td>";
+				unset($_SERVER['QUERY_STRING']);
 				echo "<a href='simpleTable.php?u=$userID&t=$table&action=select&i=$row[0]'>Edit</a> ";
 				echo "<a href='simpleTable.php?u=$userID&t=$table&action=delete&i=$row[0]'>Delete</a> ";
 				echo "</td>";

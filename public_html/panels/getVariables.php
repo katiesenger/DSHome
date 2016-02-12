@@ -1,29 +1,38 @@
+<?php 
 function getQString($q){
+	$result = "";
 		if(isset($_REQUEST[$q]))
 		{
 			if(empty($_REQUEST[$q])){
-				return "";
+				$result = "";
 			}
 			else {
-				return $_REQUEST[$q];
+				$result = $_REQUEST[$q];
 			}
 		}
 		else{
-			return "";
+			$result = "";
 		}
+	$result = str_replace("$q=","",$result);
+	echo "<p class='debug'>getQString: $q -> $result</p>";
+	return $result;
 	}
 	function getPost($p){
+		$result = "";
 		if(isset($_POST[$p]))
 		{
 			if(empty($_POST[$p])){
-				return "";
+				$result =  "";
 			}
 			else {
-				return $_POST[$p];
+				$result =  $_POST[$p];
 			}
 		}
 		else{
-			return "";
+			$result = "";
 		}
+		$result = str_replace("$p=","",$result);
+	echo "<p class='debug'>getQString: $p -> $result</p>";
+	return $result;
 	}
-	
+	?>
