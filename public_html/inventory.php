@@ -9,8 +9,10 @@
 <body>
 	<h2>Inventory Management</h2>
 <?php
+	include_once './panels/getVariables.php';
+	include_once './panels/dbFunction.php';
 	$userID = "";
-	$userID = $_POST["userid"];
+	$userID = getPost("userid");
 	include_once 'panels/menu.php?u=$userID';
 ?>
 	<div class='box'>
@@ -18,78 +20,40 @@
 	$userID = $description = $inventoryType = $purchasePrice = $purchaseLocation = $customID = "";
 	$inventoryLocation = $inventoryOwner = $picture1 = $picture2 = $inventoryCondition = "";
 
-	$userID = $_POST['userID'];
-	$description = $_POST['description'];
-	$inventoryType = $_POST['inventoryType'];
-	$purchasePrice = $_POST['purchasePrice'];
-	$purchaseLocation = $_POST['purchaseLocation'];
-	$inventoryLocation = $_POST['inventoryLocation'];
-	$inventoryOwner = $_POST['inventoryOwner'];
-  $inventoryCondition = $_POST['inventoryCondition'];
-  $picture1 = $_POST['picture1Path'];
-  $picture2 = $_POST['picture2Path'];
-  $action = $_POST['action'];
-  $upc = $_POST['upc'];
-  $filterBy = $_POST['orderBy'];
-  $sortBy = $_POST['sortBy'];
-	$customID = $_POST['customID'];
+	$userID = getPost('userID');
+	$description = getPost('description');
+	$inventoryType = getPost('inventoryType');
+	$purchasePrice = getPost('purchasePrice');
+	$purchaseLocation = getPost('purchaseLocation');
+	$inventoryLocation = getPost('inventoryLocation');
+	$inventoryOwner = getPost('inventoryOwner');
+  $inventoryCondition = getPost('inventoryCondition');
+  $picture1 = getPost('picture1Path');
+  $picture2 = getPost('picture2Path');
+  $action = getPost('action');
+  $upc = getPost('upc');
+  $filterBy = getPost('orderBy');
+  $sortBy = getPost('sortBy');
+	$customID = getPost('customID');
 		
   $qString = $_SERVER['QUERY_STRING'];
 
   if($qString != "")
 	{
-		$userID = $_GET['u'];
-		$action = $_GET['action']; //list, select, sort, add, edit, delete, filter, like
-		$value = $_GET['v'];
-		$id = $_GET['i'];
-		$customID = $_GET['c'];
+		$userID = getQString('u');
+		$action = getQString('action'); //list, select, sort, add, edit, delete, filter, like
+		$value = getQString('v');
+		$id = getQString('i');
+		$customID = getQString('c');
   }
 
 	include_once 'dbConnect.php';
-
-	function checkValue($columnName,$value,$returnColumn)
-	{
-		$checkStatement = "SELECT $returnColumn FROM tInventory WHERE $columnName = '$value'";
-		$existingResult = mysql_query($checkStatment, $database);
-		$rows = mysql_num_rows($existingResult);
-		if ($rows == 0) {		return null;	}
-		else{	return $rows[0]; }
-		mysql_close();
-	}
-function dropdown($simpleTable,$selected=null){
-		$friendlyName = $columnName = $idColumn = $nameColumn ="";
-		$words = preg_split('/(?=[A-Z])/',$table);
-		$count = count($words)-2;
-		for($i=0;$i<=count;$i++)
-		{
-			$friendlyName=$friendlyName . " " . $words[$i];
-			$columnName = $columnName . $words[$i];
-		}
-		$idColumn = $columnName . "ID";
-		$nameColumn = $columnName . "Name";
-    $table = "t" . $columnName;
-	}
-  echo "<p class='debug'>Gathering $nameColumn and $idColumn from $table to label as $friendlyName</p>";
+	include_once './panels/getValue.php';
+	include_once './panels/getDropdown.php';
+		
+	echo "<p class='debug'>Gathering $nameColumn and $idColumn from $table to label as $friendlyName</p>";
 	
-	$thisQuery = "SELECT $idColumn, $nameColumn FROM $table WHERE $nameColumn IS NOT NULL ORDER BY $nameColumn";
-	echo "<p class='debug'>$thisQuery</p>";
-
-	include_once 'dbConnect.php';
-
-	$thisData = mysql_query( $thisQuery,$database);
-	echo "<br /><select name=$idColumn required=true>";
-	while($row = mysql_fetch_row($result))
-	{
-		echo "<option value='$row[0]' ";
-			if($selected==$row[1])
-				echo "selected=true ";
-		echo ">$row[1]</option>";
-	}
-	echo "</select>\n";
-	mysql_free_result($result);
-
-	
-  $inventoryQuery = "SELECT InventoryID, 	InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID from tInventory";
+	$inventoryQuery = "SELECT InventoryID, 	InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID from tInventory";
 	
   switch($action) {
 		case "list":
@@ -104,23 +68,14 @@ function dropdown($simpleTable,$selected=null){
       $listQuery = $listQuery . " WHERE $columnName like '%" . $value . "%'";
       break;
 		case "delete":
-			if(checkValue("ID",$value,"ID")==$value)
-			{
-				$deleteQuery = "DELETE FROM tInventory WHERE InventoryID=$value";
-				if ( !( $result = mysql_query( $deleteQuery) ) ) {
-					echo "<p class='error'>Could not remove $value  " . mysql_error() . "</p>";
-				}
-			}
-			else {
-				echo "<p class='error'>Could not find $value to remove it</p>";
-			}
+			$deleteQuery = "DELETE FROM tInventory WHERE InventoryID=$value";
+			deleteRow("tInventory",$id,$deleteQuery);
 			break;
 		case "add":
-			if(checkValue("UPC",$upc,"ID")==null and checkValue("Description",$description,"ID")==null)
+			if(getReturnValue("tInventory","UPC",$upc,"ID")==null and getReturnValue("tInventory","Description",$description,"ID")==null)
       {
         $addQuery = "INSERT INTO tInventory (InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID) VALUES('$description','$inventoryType','$purchasePrice','$purchaseLocation','$inventoryLocation','$inventoryOwner','$picture1','$picture2','$dateSold','$inventoryCondition','$upc','$customID')";
-  
-				if ( !( $result = mysql_query( $addQuery) ) ) {
+  			if ( !( $result = mysql_query( $addQuery) ) ) {
 					echo "<p class='error'>Could not add $value " . mysql_error() . "</p>";
 				}
 			}
@@ -155,7 +110,7 @@ function dropdown($simpleTable,$selected=null){
       foreach($fields as $field)
       {
         $newValue = $POST_[$field];
-        $oldValue = checkValue($field,$newValue);
+        $oldValue = getReturnValue("tInventory",$field,$newValue);
         if($oldValue!=$newValue)
         {
           $editQuery = "UPDATE tInventory SET $field='$newValue' Where InventoryID='$id'";
