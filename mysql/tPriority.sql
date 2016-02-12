@@ -1,7 +1,7 @@
 USE DSHome;
 DROP TABLE IF EXISTS tPriority;
 CREATE TABLE tPriority(
-  PriorityID ID int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  PriorityID int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   PriorityName nvarchar(255) NOT NULL 
 );
 INSERT INTO tPriority(PriorityName) VALUES ('High');
