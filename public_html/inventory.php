@@ -11,11 +11,11 @@
 <?php
 	$userID = "";
 	$userID = $_POST["userid"];
-	include_once 'panels/menu.php';
+	include_once 'panels/menu.php?u=$userID';
 ?>
 	<div class='box'>
 	<?php
-	$userID = $description = $inventoryType = $purchasePrice = $purchaseLocation = "";
+	$userID = $description = $inventoryType = $purchasePrice = $purchaseLocation = $customID = "";
 	$inventoryLocation = $inventoryOwner = $picture1 = $picture2 = $inventoryCondition = "";
 
 	$userID = $_POST['userID'];
@@ -32,7 +32,8 @@
   $upc = $_POST['upc'];
   $filterBy = $_POST['orderBy'];
   $sortBy = $_POST['sortBy'];
-
+	$customID = $_POST['customID'];
+		
   $qString = $_SERVER['QUERY_STRING'];
 
   if($qString != "")
@@ -41,6 +42,7 @@
 		$action = $_GET['action']; //list, select, sort, add, edit, delete, filter, like
 		$value = $_GET['v'];
 		$id = $_GET['i'];
+		$customID = $_GET['c'];
   }
 
 	include_once 'dbConnect.php';
@@ -54,11 +56,11 @@
 		else{	return $rows[0]; }
 		mysql_close();
 	}
-function dropdown($simpleTable,$selected==null){
+function dropdown($simpleTable,$selected=null){
 		$friendlyName = $columnName = $idColumn = $nameColumn ="";
 		$words = preg_split('/(?=[A-Z])/',$table);
 		$count = count($words)-2;
-		for($i=0,$i<=count,$i++)
+		for($i=0;$i<=count;$i++)
 		{
 			$friendlyName=$friendlyName . " " . $words[$i];
 			$columnName = $columnName . $words[$i];
@@ -69,7 +71,7 @@ function dropdown($simpleTable,$selected==null){
 	}
   echo "<p class='debug'>Gathering $nameColumn and $idColumn from $table to label as $friendlyName</p>";
 	
-	$thisQuery = "SELECT $idColumn, $nameColumn FROM $table WHERE $nameColumn IS NOT NULL ORDER BY $nameColumn;"
+	$thisQuery = "SELECT $idColumn, $nameColumn FROM $table WHERE $nameColumn IS NOT NULL ORDER BY $nameColumn";
 	echo "<p class='debug'>$thisQuery</p>";
 
 	include_once 'dbConnect.php';
@@ -81,13 +83,13 @@ function dropdown($simpleTable,$selected==null){
 		echo "<option value='$row[0]' ";
 			if($selected==$row[1])
 				echo "selected=true ";
-		echo ">$row[1]</option>"
+		echo ">$row[1]</option>";
 	}
 	echo "</select>\n";
 	mysql_free_result($result);
-}
+
 	
-  $inventoryQuery = "SELECT InventoryID, 	InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC from tInventory";
+  $inventoryQuery = "SELECT InventoryID, 	InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID from tInventory";
 	
   switch($action) {
 		case "list":
@@ -114,9 +116,9 @@ function dropdown($simpleTable,$selected==null){
 			}
 			break;
 		case "add":
-			if(checkValue("UPC",$upc,"ID")==null && checkValue("Description",$description,"ID")==null)
+			if(checkValue("UPC",$upc,"ID")==null and checkValue("Description",$description,"ID")==null)
       {
-        $addQuery = "INSERT INTO tInventory (InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC) VALUES('$description','$inventoryType','$purchasePrice','$purchaseLocation','$inventoryLocation','$inventoryOwner','$picture1','$picture2','$dateSold','$inventoryCondition','$upc')"
+        $addQuery = "INSERT INTO tInventory (InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID) VALUES('$description','$inventoryType','$purchasePrice','$purchaseLocation','$inventoryLocation','$inventoryOwner','$picture1','$picture2','$dateSold','$inventoryCondition','$upc','$customID')";
   
 				if ( !( $result = mysql_query( $addQuery) ) ) {
 					echo "<p class='error'>Could not add $value " . mysql_error() . "</p>";
@@ -144,12 +146,13 @@ function dropdown($simpleTable,$selected==null){
       echo "<br />Date Sold: <input type='text' name='DateSold' id='DateSold' value='$dateSold' placemarker='dd-mmm-yyyy' />";
       dropdown("InventoryConditionID",$inventoryCondition);
       echo "<br />UPC: <input type='text' name='upc' id='upc' value='$upc'/>";
+			echo "<br />Custm ID: <input type='text' name='customID' id='customID' value='$customID' />";
       echo "<input type='submit' name='update' value='update' />";
 			echo "</form>";
 			break;
 		case "edit":
-			$fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC";
-      foreach($field in $fields)
+			$fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID";
+      foreach($fields as $field)
       {
         $newValue = $POST_[$field];
         $oldValue = checkValue($field,$newValue);
@@ -167,34 +170,34 @@ function dropdown($simpleTable,$selected==null){
       break;
 	}
 function filterDropDown(){
-  $fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC";
+  $fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID";
   echo "Filter By: <select id='filterBy' name='filterBy'>";
   echo "<option value='none'";
   if($filterBy=="")
       echo "selected=selected";
   echo ">No Filter</option>";
-      foreach($field in $fields)
+      foreach($fields as $field)
       {
         echo "<option value='$field'";
         if($filterBy==$field)
           echo "selected=selected";
-        echo ">$field</option>'"
+        echo ">$field</option>'";
       }
   echo "</select>";
 }
 function orderDropDown(){
-  $fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC";
+  $fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID";
   echo "Order By: <select id='orderBy' name='orderBy'>";
   echo "<option value='All' ";
   if($orderBy=="")
       echo "selected=selected";
   echo ">Show All</option>";
-      foreach($field in $fields)
+      foreach($fields as $field)
       {
         echo "<option value='$field' ";
         if($orderBy==$field)
           echo "selected=selected";
-        echo ">$field</option>'"
+        echo ">$field</option>'";
       }
   echo "</select>";
 }
@@ -213,9 +216,9 @@ function orderDropDown(){
       $data = mysql_query( $listQuery,$database);
 			echo "<form><table class='displayData'>";
 			// printing table rows
-    $fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC";
+    $fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID";
       echo "<tr><th>&nbsp;</th><th>ID</th>";
-      foreach($field in $fields)
+      foreach($fields as $field)
       {
         echo "<th>$field</th>";
       }
@@ -228,7 +231,7 @@ function orderDropDown(){
         echo "<a href='Inventory.php?u=$userID&i=$row[0]&action=select'>Edit</a> ";
         echo "<a href='Inventory.php?u=$userID&i=$row[0]&action=select'>Delete</a> ";
         echo "</td>";
-        for($i=1,$i<=$count,$i++)
+        for($i=1;$i<=$count;$i++)
         {
           echo "<td>$row[$i]</td>";
         }
@@ -240,10 +243,6 @@ function orderDropDown(){
 	}
 	
 	?>
-</div>
-</body>
-</html>
-
 </div>
 </body>
 </html>
