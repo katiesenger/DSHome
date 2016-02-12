@@ -9,9 +9,10 @@
 <body>
 	<h1>Welcome to DSHome.ca</h1>
 	<?php
+	include_once './panels/getVariables.php';
 	$userID ="";
-  $userID = $_POST['userid'];
-	include_once './panels/menu.php;
+  $userID = getPost('userid');
+	include_once './panels/menu.php';
 	echo "<form><input type='hidden' name='userid' id='userid' value='$userID' /></form>";
 	?>
 

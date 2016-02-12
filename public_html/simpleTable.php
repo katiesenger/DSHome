@@ -10,6 +10,8 @@
 	<h2>Inventory</h2>
 <?php
 	include_once './panels/getVariables.php';
+	include_once './panels/dbFunction.php';
+	
 	$userID = $table = $action = $value = $id = "";
 	$userID = getPost("userid");
 	if($userID == "")
@@ -43,41 +45,6 @@
 	
 	include_once 'dbConnect.php';
 
-	function checkValueByName($table,$idColumn,$nameColumn,$value)
-	{
-		include_once 'dbConnect.php';
-		$checkStatement = "SELECT $idColumn FROM $table WHERE $nameColumn = '$value'";
-		echo "<p class='debug'>$checkStatement</p>";
-		$existingResult = mysql_query($checkStatement);
-		$rows = mysql_num_rows($existingResult);
-		if ($rows == 0) {		return 0;	}
-		else{	return $rows[0]; }
-		mysql_close();
-	}
-	function getValue($table,$idColumn,$nameColumn,$value)
-	{
-		include_once 'dbConnect.php';
-		$checkStatement = "SELECT $nameColumn FROM $table WHERE $idColumn = '$value'";
-		echo "<p class='debug'>$checkStatement</p>";
-		$existingResult = mysql_query($checkStatement);
-		$rows = mysql_num_rows($existingResult);
-		if ($rows == 0) {		return 0;	}
-		else{	return $rows[0]; }
-		mysql_close();
-	}
-	
-	function checkValueByID($table,$idColumn,$nameColumn,$value)
-	{
-		include_once 'dbConnect.php';
-		$checkStatement = "SELECT $idColumn FROM $table WHERE $idColumn = '$value'";
-		echo "<p class='debug'>$checkStatement</p>";
-		$existingResult = mysql_query($checkStatement);
-		$rows = mysql_num_rows($existingResult);
-		if ($rows == 0) {		return 0;	}
-		else{	return $rows[0]; }
-		mysql_close();
-	}
-	
 	$listQuery = "SELECT $idColumn, $nameColumn FROM $table ORDER BY $nameColumn";
 	switch($action) {
 		case "list":
@@ -90,7 +57,9 @@
 			{
 				$value = $id;
 			}
-			if(checkValueByID($table,$idColumn,$nameColumn,$value)==$value)
+			$checkThis =  checkValueByID($table,$idColumn,$nameColumn,$value);
+			echo "<p class='debug'>Check Value By ID: $checkThis</p>";
+			if($checkThis==$value)
 			{
 				$deleteQuery = "DELETE FROM $table WHERE $idColumn='$value'";
 				echo "<p class='debug'>$deleteQuery</p>";
@@ -114,7 +83,7 @@
 			}
 			else{
 				echo "<p class='error'>$value already exists</p>";
-				listData();
+				listData($listQuery,$friendlyName,$table,$userID);
 			}
 			break;
 		case "select":
