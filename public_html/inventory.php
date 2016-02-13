@@ -13,7 +13,7 @@
 	include_once './panels/dbFunction.php';
 	$userID = "";
 	$userID = getPost("userid");
-	include_once 'panels/menu.php?u=$userID';
+	include_once 'panels/menu.php';
 ?>
 	<div class='box'>
 	<?php
@@ -48,11 +48,8 @@
   }
 
 	include_once 'dbConnect.php';
-	include_once './panels/getValue.php';
 	include_once './panels/getDropdown.php';
-		
-	echo "<p class='debug'>Gathering $nameColumn and $idColumn from $table to label as $friendlyName</p>";
-	
+
 	$inventoryQuery = "SELECT InventoryID, 	InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID from tInventory";
 	
   switch($action) {
@@ -85,7 +82,6 @@
 			}
 			break;
 		case "select":
-			$existingValue = getValue();
 			echo "<form id='edit' method='post' action='inventoryFunction.php' autocomplete='on' type='submit'>";
 			echo "<input type='hidden' id='InventoryID' name ='InventoryID' value='$id'>";
       echo "<input type='hidden' id='UserID' name='UserID' value='$userID'/>";
@@ -124,41 +120,17 @@
       }
       break;
 	}
+		$fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID";
 function filterDropDown(){
-  $fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID";
-  echo "Filter By: <select id='filterBy' name='filterBy'>";
-  echo "<option value='none'";
-  if($filterBy=="")
-      echo "selected=selected";
-  echo ">No Filter</option>";
-      foreach($fields as $field)
-      {
-        echo "<option value='$field'";
-        if($filterBy==$field)
-          echo "selected=selected";
-        echo ">$field</option>'";
-      }
-  echo "</select>";
+  
+  dropdownFields($fields,"Filter By","filterBy",$filterBy);
 }
 function orderDropDown(){
-  $fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID";
-  echo "Order By: <select id='orderBy' name='orderBy'>";
-  echo "<option value='All' ";
-  if($orderBy=="")
-      echo "selected=selected";
-  echo ">Show All</option>";
-      foreach($fields as $field)
-      {
-        echo "<option value='$field' ";
-        if($orderBy==$field)
-          echo "selected=selected";
-        echo ">$field</option>'";
-      }
-  echo "</select>";
+  dropdownFields($fields,"Order By","orderBy",$orderBy);
 }
 
-	listData();
-	function listData()
+	listData($listQuery);
+	function listData($listQuery)
 	{
 	
 		if ( !( $result = mysql_query( $listQuery) ) ) {
@@ -166,12 +138,11 @@ function orderDropDown(){
 		}
 		else {
 			echo "<h2>Inventory</h2>";
-	orderDropDown();
+			orderDropDown();
       filterDropDown();
       $data = mysql_query( $listQuery,$database);
 			echo "<form><table class='displayData'>";
 			// printing table rows
-    $fields = "InventoryDescription, InventoryTypeID,	PurchasePrice,	PurchaseLocation,	InventoryLocationID,	InventoryOwnerID, Picture1Location, Picture2Location,	DateSold, InventoryConditionID, UPC, CustomID";
       echo "<tr><th>&nbsp;</th><th>ID</th>";
       foreach($fields as $field)
       {

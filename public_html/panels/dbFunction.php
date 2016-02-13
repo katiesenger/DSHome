@@ -62,5 +62,6 @@ function deleteRow($table,$id,$deleteQuery)
 			else {
 				echo "<p class='error'>Could not find $value to remove it from $table</p>";
 			}
+	}
 }
 ?>

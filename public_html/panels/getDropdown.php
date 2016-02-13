@@ -30,4 +30,21 @@ $thisQuery = "SELECT $idColumn, $nameColumn FROM $table WHERE $nameColumn IS NOT
 	
 
 }
+function dropdownFields($fields, $friendlyName, $fieldName, $selected)
+{
+	echo "$friendlyName <select id='$fieldName' name='$fieldName'>";
+  echo "<option value='none'";
+  if($selected=="")
+      echo "selected=selected";
+  echo ">No Filter</option>";
+      foreach($fields as $field)
+      {
+        echo "<option value='$field'";
+        if($filterBy==$field)
+          echo "selected=selected";
+        echo ">$field</option>'";
+      }
+  echo "</select>";
+}
+
  ?>
