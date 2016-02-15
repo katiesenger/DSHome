@@ -1,4 +1,16 @@
 <?php 
+function parseQString()
+{
+	$qString = $_SERVER['QUERY_STRING'];
+	$thisSet = parse_str($qString,$result);
+	$count = count($result);
+	echo "<p class='debug'><h2>Parse Query String</h2><h3>$qString</h3>";
+	for($i=0;$i<$count;$i++)
+	{
+		echo $result[$i];
+	}
+	echo "</p>";
+}
 function getQString($q){
 	$result = "";
 	if(empty($q))

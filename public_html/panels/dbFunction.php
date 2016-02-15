@@ -4,15 +4,10 @@ function getThisValue($checkStatement){
    include_once 'dbConnect.php';
     echo "<p class='debug'>$checkStatement</p>";
 		$existingResult = mysql_query($checkStatement);
-		$rows = mysql_num_rows($existingResult);
-		echo "<p class='debug'>Returned: $rows</p>";
-		if ($rows == 0) {		return 0;	}
-		else{
-			while($row = mysql_fetch_row($existingResult))
-			{
-        echo "<p class='debug'>Value: $row[0]</p>";
-				return $row[0];
-			}
+		while($row = mysql_fetch_row($existingResult))
+		{
+			echo "<p class='debug'>Value: $row[0]</p>";
+			return $row[0];
 		}
 		mysql_close();
 	}
@@ -39,7 +34,7 @@ function getReturnValue($table,$checkColumn,$value,$returnColumn)
 
 	function displayValue($table,$checkColumn,$value,$returnColumn,$showBeside=0)
 	{
-	
+	include_once 'dbConnect.php';
 	$checkStatement = "SELECT $getColumn FROM $table WHERE $idColumn='$checkValue'";
 	$value = getReturnValue($table,$checkColumn,$value,$returnColumn);
 	if($showBeside==1)
