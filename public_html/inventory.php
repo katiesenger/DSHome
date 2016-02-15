@@ -149,7 +149,8 @@ function orderDropDown(){
         echo "<th>$field</th>";
       }
   echo "</tr>";
-      $count = count($fields)+1;
+unset($_SERVER['QUERY_STRING']);
+			$count = count($fields)+1;
       while($row = mysql_fetch_row($result))
       {
         echo "<tr>";

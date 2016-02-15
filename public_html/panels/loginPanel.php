@@ -2,8 +2,6 @@
 
 	<form id="login" method="post" action="doLogin.php" autocomplete="on" type="submit">
 
-		<input type="hidden" name="userid" />
-
 		<br />User Name:<input type="text" name="username" />
 
 		<br />Password: <input type="password" name="password" />

@@ -1,31 +1,34 @@
-
-<p class="menu">
-<nav>
-		<ul>
-			<li><a href="index.php" class="blackButton">Home</a></li>
- 
 <?php
 
- 
-		$userID = ""; 
-		$userID = $_SERVER['QUERY_STRING'];
-		if(empty($userID)){
+include_once './panels/getVariables.php';
+include_once './dbConnect.php';
+$userID = $menuQuery = $authenticationRequired = $parentItem = "";
+$userID = getUser();
+echo "<p class='menu'>";
+echo "<nav>";
+echo "<ul>";
 
-			echo "<p class='error'>Please <a href='login.php'>Log in</a> to continue.</p>";
-			include_once 'loginPanel.php';		
-		}
+echo "<p class='debug'>User: $userID";
+echo "<form><input type='hidden' id='userID' name='userID' value='$userID' /></form>";
 
-		else{
-			echo "<li><a href='editProfile.php?u=$userID' class='whiteButton'>Edit Profile</a></li>";
-			echo "<li><a href='./Forms/index.php' class='whiteButton'>Forms</a></li>";
-			echo "<li><a href='contact.php' class='whiteButton'>Contact Us</a></li>";
-			echo "<li><a href='logout.php' class='whiteButton'>Log out</a></li>";
-			echo "<li><a href='inventory.php' class='whiteButton'>Inventory</a></li>";
-			echo "<form><input type='hidden' id='userid' name='userid' value='$userID' />";
+if(empty($userID)){
+	$authenticationRequired = 0;
+	include_once './panels/loginPanel.php';
+}
+else
+{
+	$authenticationRequired=1;
 }
 
+$menuQuery = "SELECT MenuName,PagePath,Color, ParentItem, Sequence FROM tMenu WHERE RequiresAuthentication=$authenticationRequired ORDER BY ParentItem, Sequence";
+
+$thisData = mysql_query($menuQuery);
+while($row = mysql_fetch_row($thisData))
+	{
+		echo "<li><a href='$row[1]?u=$userID' class='" . $row[2] . "Button'>$row[0]</a></li>";
+	}
+echo "</ul>";
+mysql_free_result($thisData);
+echo "</nav></p>\n";
 
 	?>
-		</ul>
-	</nav>
-</p>
