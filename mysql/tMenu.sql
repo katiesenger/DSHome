@@ -13,4 +13,5 @@ INSERT INTO tMenu(MenuName, PagePath, Sequence, RequiresAuthentication, ParentIt
 INSERT INTO tMenu(MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES ('Login','./login.php',1,0,1,'white');
 INSERT INTO tMenu(MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES ('Register','./register.php',2,0,1,'white');
 INSERT INTO tMenu(MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES('Home','./home.php',1,1,1,'black');
-INSERT INTO tMenu(MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES('Edit Menu','./editMenu.php',2,1,1,'white');
+INSERT INTO tMenu(MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES('Edit Menu','./editMenu.php',3,1,1,'white');
+INSERT INTO tMenu(MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES('Logout','./logout.php',2,1,1,'white');

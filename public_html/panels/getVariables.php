@@ -53,6 +53,10 @@ $userID =  getPost('userID');
 	else {
 		echo "<p class='debug'>User By Post: $userID</p>";
 	}
+	if(strlen($userID)>3)
+	{
+		$userID = null;
+	}
   return $userID;
 }
 	?>
