@@ -1,7 +1,7 @@
 <?php
-
+$mysqli = mysqli_init();
 include_once './panels/getVariables.php';
-include_once './dbConnect.php';
+
 $userID = $menuQuery = $authenticationRequired = $parentItem = "";
 $userID = getUser();
 echo "<p class='menu'>";
@@ -12,23 +12,22 @@ echo "<p class='debug'>User: $userID";
 echo "<form><input type='hidden' id='userID' name='userID' value='$userID' /></form>";
 
 if(empty($userID)){
-	$authenticationRequired = 0;
+$menuQuery = "SELECT MenuName,PagePath,Color, ParentItem, Sequence FROM tMenu WHERE RequiresAuthentication=0 ORDER BY ParentItem, Sequence";
 	include_once './panels/loginPanel.php';
 }
 else
 {
-	$authenticationRequired=1;
+	$menuQuery = "SELECT MenuName,PagePath,Color, ParentItem, Sequence FROM tMenu WHERE RequiresAuthentication=1 ORDER BY ParentItem, Sequence";
 }
 
-$menuQuery = "SELECT MenuName,PagePath,Color, ParentItem, Sequence FROM tMenu WHERE RequiresAuthentication=$authenticationRequired ORDER BY ParentItem, Sequence";
-
-$thisData = mysql_query($menuQuery);
-while($row = mysql_fetch_row($thisData))
+include_once './dbConnect.php';
+$thisData =  $database->query($menuQuery);
+while($row = $thisData->fetch_assoc())
 	{
-		echo "<li><a href='$row[1]?u=$userID' class='" . $row[2] . "Button'>$row[0]</a></li>";
+		echo "<li><a href='".$row['PagePath']."?u=".$userID."' class='" . $row['Color'] . "Button'>".$row['MenuName']."</a></li>";
 	}
 echo "</ul>";
-mysql_free_result($thisData);
 echo "</nav></p>\n";
+$thisData->close();
 
 	?>

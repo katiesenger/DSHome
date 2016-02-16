@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- 	Purpose: crud menu --> 
+<html>
+<head>
+	<meta charset = "utf-8">
+	<title>Menu Management</title>
+	<link href="DSHome.css" rel="stylesheet" />
+</head>
+<body>
+	<h2>Menu Management</h2>
+<?php
+  include_once './panels/dbFunction.php';
+  include_once './panels/getVariables.php';
+  $userID = getUser();
+  include_once './panels/menu.php';
+  echo "<div class='box'>";
+  
+    $MenuID =	$MenuName = $PagePath = $Sequence = $RequiresAuthentication = $ParentItem = $Color = "";
+  $MenuID = getPost('MenuID');
+  $MenuName = getPost('MenuName');
+  $PagePath = getPost('PagePath');
+  $Sequence = getPost('Sequence');
+  $RequiresAuthentication = getPost('RequiresAuthentication');
+  $ParentItem = getPost('ParentItem');
+  $Color = getPost('Color');
+	
+  $fields = "MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color";
+  
+
+  $returnID = getReturnValue("tMenu","MenuName",$MenuName,"MenuID");
+  if($returnID==null OR $returnID == 0)
+  {
+    $addQuery = "INSERT INTO tMenu (MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES ('$MenuName', '$PagePath', '$Sequence', '$RequiresAuthentication', '$ParentItem', '$Color')";
+  	echo "<p class='debug'>$addQuery</p>";
+		include_once 'dbConnect.php';
+		if ( !( $result = mysql_query( $addQuery) ) ) {
+				echo "<p class='error'>Could not add $value " . mysql_error() . "</p>";
+			}
+ 		echo "<form method='post' name='getList' action='editMenu.php?u=$userID' autocomplete='on'>";
+  	echo "<input type='hidden' name='userid' value='$userID' />";
+		echo "<input type='submit' value='Request Services'/>";
+		echo "</form>";
+
+	}
+	else{
+		echo "<p class='error'>$value already exists</p>";
+    echo "<form method='post' name='getList' action='newMenu.php?u=$userID' autocomplete='on'>";
+  	echo "<input type='hidden' name='userid' value='$userID' />";
+		echo "<input type='submit' value='Request Services'/>";
+		echo "</form>";
+
+	}
+	mysql_close();
+  ?>
+  </div>
+  <!--<script language="JavaScript">document.getList.submit();</script>-->
+  </body></html>

@@ -1,13 +1,10 @@
 <?php
-$database = mysql_connect("localhost","dsh","dsh");
-if(! $database)
-{
-     die('Connection Problem: '.mysql_error());
+ini_set('error_reporting', E_ALL|E_STRICT);
+ini_set('display_errors', 1);
+$mysqli = mysqli_init();
+$database = new mysqli("localhost", "dsh", "dsh", "DSHome");
+if ($mysqli->connect_errno) {
+    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
-	
-if(!mysql_select_db("DSHome"))
-{
-     die('Database Selection Error: '.mysql_error());
-}
-echo "<p class='debug'>Connected</p>";
+echo "<p class='debug'>Connected</p>\n";
 ?>
