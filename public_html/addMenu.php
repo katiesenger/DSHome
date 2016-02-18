@@ -15,7 +15,7 @@
   include_once './panels/menu.php';
   echo "<div class='box'>";
   
-    $MenuID =	$MenuName = $PagePath = $Sequence = $RequiresAuthentication = $ParentItem = $Color = "";
+  $MenuID =	$MenuName = $PagePath = $Sequence = $RequiresAuthentication = $ParentItem = $Color = "";
   $MenuID = getPost('MenuID');
   $MenuName = getPost('MenuName');
   $PagePath = getPost('PagePath');
@@ -24,19 +24,12 @@
   $ParentItem = getPost('ParentItem');
   $Color = getPost('Color');
 	
-  $fields = "MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color";
-  
-
   $returnID = getReturnValue("tMenu","MenuName",$MenuName,"MenuID");
   if($returnID==null OR $returnID == 0)
   {
-    $addQuery = "INSERT INTO tMenu (MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES ('$MenuName', '$PagePath', '$Sequence', '$RequiresAuthentication', '$ParentItem', '$Color')";
-  	echo "<p class='debug'>$addQuery</p>";
-		include_once 'dbConnect.php';
-		if ( !( $result = mysql_query( $addQuery) ) ) {
-				echo "<p class='error'>Could not add $value " . mysql_error() . "</p>";
-			}
- 		echo "<form method='post' name='getList' action='editMenu.php?u=$userID' autocomplete='on'>";
+    include_once './panels/dbMenuItem.php';
+		addMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color);		
+		echo "<form method='post' name='getList' action='editMenu.php?u=$userID' autocomplete='on'>";
   	echo "<input type='hidden' name='userid' value='$userID' />";
 		echo "<input type='submit' value='Request Services'/>";
 		echo "</form>";
@@ -50,7 +43,7 @@
 		echo "</form>";
 
 	}
-	mysql_close();
+	
   ?>
   </div>
   <!--<script language="JavaScript">document.getList.submit();</script>-->
