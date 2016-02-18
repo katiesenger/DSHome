@@ -6,36 +6,41 @@ USE DSHome;
 DROP TABLE IF EXISTS tUser;
 
 CREATE TABLE IF NOT EXISTS tUser(
-	
-UserID int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-
+	UserID int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	UserName varchar(50) NOT NULL,
-
 	FirstName varchar(50) NOT NULL,
-	
-LastName varchar(50) NOT NULL,
-
+	LastName varchar(50) NOT NULL,
 	Email varchar(100) NOT NULL,
-	
-UPassword varchar(15) NOT NULL,
-	
-PhoneNumber varchar(21) NOT NULL,
-	
-MailingAddress varchar(100) NOT NULL,
+	UPassword varchar(15) NOT NULL,
+	PhoneNumber varchar(21) NOT NULL,
+	MailingAddress varchar(100) NOT NULL,
 	StreetAddress varchar(100) NOT NULL,
-	
-City varchar(50) NOT NULL,
-	
-Province varchar(2) NOT NULL,
+	City varchar(50) NOT NULL,
+	Province varchar(2) NOT NULL,
 	Country varchar(50) NOT NULL,
-
 	PostCode varchar(10) NOT NULL,
-
 	IsStaff bit NOT NULL,
-	
-IsAdmin bit NOT NULL
-,
-	IsContact bit NOT NULL
+	IsAdmin bit NOT NULL,
+	IsContact bit NOT NULL,
+	PasswordQuestion1 nvarchar(100) NULL,
+	PasswordAnswer1 nvarchar(100) NULL,
+	PasswordQuestion2 nvarchar(100) NULL,
+	PasswordAnswer2 nvarchar(100) NULL,
+	PasswordQuestion3 nvarchar(100) NULL,
+	PasswordAnswer3 nvarchar(100) NULL,
+	PasswordQuestion4 nvarchar(100) NULL,
+	PasswordAnswer4 nvarchar(100) NULL,
+	PasswordQuestion5 nvarchar(100) NULL,
+	PasswordAnswer5 nvarchar(100) NULL,
+	PasswordQuestion6 nvarchar(100) NULL,
+	PasswordAnswer6 nvarchar(100) NULL,
+	LastLogin DateTime,
+	LastPasswordChange DateTime,
+	CreationDate DateTime,
+	IsLockedOut int(1),
+	LastLockedOutDate DateTime,
+	LastChanged DateTime,
+	LastEditBy nvarchar(100)
 );
 
 
