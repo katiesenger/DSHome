@@ -1,5 +1,4 @@
 <?php
-$mysqli = mysqli_init();
 include_once './panels/getVariables.php';
 
 $userID = $menuQuery = $authenticationRequired = $parentItem = "";
@@ -8,26 +7,23 @@ echo "<p class='menu'>";
 echo "<nav>";
 echo "<ul>";
 
-echo "<p class='debug'>User: $userID";
+echo "<p class='debug'>User: $userID</p>";
 echo "<form><input type='hidden' id='userID' name='userID' value='$userID' /></form>";
 
+include_once 'dbMenuItem.php';
+
 if(empty($userID)){
-$menuQuery = "SELECT MenuName,PagePath,Color, ParentItem, Sequence FROM tMenu WHERE RequiresAuthentication=0 ORDER BY ParentItem, Sequence";
+	getMenu("0",null);
 	include_once './panels/loginPanel.php';
 }
 else
 {
-	$menuQuery = "SELECT MenuName,PagePath,Color, ParentItem, Sequence FROM tMenu WHERE RequiresAuthentication=1 ORDER BY ParentItem, Sequence";
+	getMenu("1",$userID);
 }
 
-include_once './dbConnect.php';
-$thisData =  $database->query($menuQuery);
-while($row = $thisData->fetch_assoc())
-	{
-		echo "<li><a href='".$row['PagePath']."?u=".$userID."' class='" . $row['Color'] . "Button'>".$row['MenuName']."</a></li>";
-	}
+
 echo "</ul>";
 echo "</nav></p>\n";
-$thisData->close();
+
 
 	?>

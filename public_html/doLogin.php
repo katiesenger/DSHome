@@ -27,7 +27,7 @@
 	
 	?>
 
-	<script language="JavaScript">document.getList.submit();</script>
+<!--	<script language="JavaScript">document.getList.submit();</script> -->
 
 <p class='debug'>End Test</p>
 

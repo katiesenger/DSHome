@@ -3,13 +3,14 @@
 function getThisValue($checkStatement){
    include_once 'dbConnect.php';
     echo "<p class='debug'>$checkStatement</p>";
-		$existingResult = mysql_query($checkStatement);
-		while($row = mysql_fetch_row($existingResult))
+		$existingResult = mysqli_query($checkStatement);
+		while($row = mysqli_fetch_row($existingResult))
 		{
 			echo "<p class='debug'>Value: $row[0]</p>";
 			return $row[0];
 		}
-		mysql_close();
+	$existingResult->close();
+
 	}
 	function checkValueByID($table,$idColumn,$nameColumn,$value)
 	{
@@ -51,11 +52,11 @@ function deleteRow($table,$id,$deleteQuery)
 	if(getReturnValue($table,"ID",$id,"ID")==$id)
 			{
 				include_once './dbConnect.php';
-				if ( !( $result = mysql_query( $deleteQuery) ) ) {
-				echo "<p class='error'>Could not remove $value from $table " . mysql_error() . "</p>";
+				if ( !( $result = mysqli_query( $deleteQuery) ) ) {
+				echo "<p class='error'>Could not remove $id from $table " . mysql_error() . "</p>";
 			}
 			else {
-				echo "<p class='error'>Could not find $value to remove it from $table</p>";
+				echo "<p class='error'>Could not find $id to remove it from $table</p>";
 			}
 	}
 }
