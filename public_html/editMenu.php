@@ -58,13 +58,13 @@
       $listQuery = $listQuery . " WHERE $columnName like '%" . $value . "%'";
       break;
 		case "delete":
-			$deleteQuery = "DELETE FROM tMenu WHERE MenuID=$value";
-			deleteRow("tMenu",$MenuID,$deleteQuery);
+			deleteMenuItem($MenuID);
+			reloadMenu($userID);
 			break;
 		case "add":
 			include_once './panels/dbMenuItem.php';
 			addMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color);
-			listData($listQuery,$userID);
+			reloadMenu($userID);
 			break;
 		case "select":
 			echo "<p class='debug'>MenuID: $MenuID :: ID: $id</p>";
@@ -77,7 +77,7 @@
 		case "edit":
 			include_once './panels/dbMenuItem.php';
 			updateMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color,$MenuID);
-			//listData($listQuery,$userID);
+			reloadMenu($userID);
 			break;
 	}
     function filterDropDown($fields){
@@ -95,8 +95,15 @@ function orderDropDown($fields){
 		echo "<br /><br /><a href='newMenu.php?u=$userID'>Add Menu Item</a>";
 		
 	}
-	
+	function reloadMenu($userID)
+	{
+		echo "<form method='post' name='getList' action='editMenu.php?u=$userID' autocomplete='on'>";
+  	echo "<input type='hidden' name='userid' value='$userID' />";
+		echo "<input type='submit' value='Reload Menu'/>";
+		echo "</form>";
+	}
 	?>
+		<script language="JavaScript">document.getList.submit();</script>
 </div>
 </body>
 </html>

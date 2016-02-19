@@ -178,4 +178,21 @@ function getMenuDropDown($selected)
 	$dbh=null;
 	
 }
+function deleteMenuItem($MenuID)
+{
+  
+  try {
+    include_once 'dbConnect.php';
+    $dbh = OpenConn();
+    $stmt = $dbh->prepare("DELETE from tMenu WHERE MenuID=:MenuID");
+    $stmt->bindParam(':MenuID',$MenuID);
+		if ($stmt->execute()) {
+			echo "<p class='debug'>$MenuID Deleted</p>";
+		}
+	}
+	catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+  }
+}
 ?>

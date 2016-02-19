@@ -15,9 +15,9 @@ function deleteRow($table, $idColumn, $id)
     }
     $dbh = null;
   }
-  }
   catch (PDOException $e) {
     print "Error!: " . $e->getMessage() . "<br/>";
     die();
   }
+}
 ?>
