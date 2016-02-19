@@ -40,7 +40,7 @@ else
 	echo "<p class='debug'>Passwords do match</p>";
 }
 
-include_once 'dbConnect.php';
+include_once './panels/dbConnect.php';
 echo "<p class='debug'>connect</p>";
 $existingQuery = "Select UserID FROM tUser where UserName='$username' or email='$email'";
 echo "<p class='debug'>$existingQuery</p>";
