@@ -9,7 +9,6 @@
 <body>
 	<h2>Menu Management</h2>
 <?php
-  include_once './panels/dbFunction.php';
   include_once './panels/getVariables.php';
   $userID = getUser();
   include_once './panels/menu.php';
@@ -46,5 +45,5 @@
 	
   ?>
   </div>
-  <!--<script language="JavaScript">document.getList.submit();</script>-->
+  <script language="JavaScript">document.getList.submit();</script>
   </body></html>

@@ -14,22 +14,27 @@ function dropdown($simpleTable,$selected=null){
 		$idColumn = $columnName . "ID";
 		$nameColumn = $columnName . "Name";
     $table = "t" . $columnName;
-$thisQuery = "SELECT $idColumn, $nameColumn FROM $simpleTable WHERE $nameColumn IS NOT NULL ORDER BY $nameColumn";
-	echo "<p class='debug'>$thisQuery</p>";
-
+	
+	echo "<p class='debug'>Table: $table, IDCol: $idColumn, NameCol: $nameColumn</p>";
+	
 	include_once 'dbConnect.php';
-
-	$thisData = mysql_query( $thisQuery);
-	echo "<br /><select name=$idColumn required=true>";
-	while($row = mysql_fetch_row($thisData))
-	{
-		echo "<option value='$row[0]' ";
-			if($selected==$row[1])
+	$dbh = OpenConn();
+	$stmt = $dbh->prepare("SELECT :idColumn, :nameColumn FROM :table WHERE :nameColumn IS NOT NULL ORDER BY :nameColumn");
+	$stmt->bindParam(":idColumn",$idColumn);
+	$stmt->bindParam(":nameColumn",$nameColumn);
+	$stmt->bindParam(":table",$table);
+	if ($stmt->execute()) {
+		echo "<br /><select name='$idColumn' required=true>";
+		while ($row = $stmt->fetch()) {
+			echo "<option value='".$row[$idColumn]."' ";
+			if($selected==$row[$nameColumn])
 				echo "selected=true ";
-		echo ">$row[1]</option>";
-	}
+		echo ">".$row[$nameColumn]."</option>";
+		}
 	echo "</select>\n";
-	mysql_free_result($thisData);
+	}
+		else{echo "Broken";}
+	$dbh=null;
 	
 
 }

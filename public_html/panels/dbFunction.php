@@ -62,4 +62,24 @@ function getStatementByQuery() {
 		}
 	$dbh = null;
 	}
+function updateValue($table,$setColumn,$setValue,$checkColumn,$checkValue){
+  
+	include_once 'dbConnect.php';
+	$dbh = OpenConn();
+	$stmt = $dbh->prepare("UPDATE :table SET :setColumn=:setValue WHERE :checkColumn=:checkValue");
+	$stmt->bindParam(":setColumn",$setColumn);
+	$stmt->bindParam(":setValue",$setValue);
+	$stmt->bindParam(":table",$table);
+	$stmt->bindParam(":checkColumn",$checkColumn);
+	$stmt->bindParam(":checkValue",$checkValue);
+  try{
+		$stmt->execute();
+		echo "<p class='debug'>Updated</p>";
+	}
+	catch (PDOException $e) {
+    print "<p class='error'>Error!: " . $e->getMessage() . "</p><br/>";
+    die();
+	}
+	$dbh = null;
+	}
 ?>
