@@ -23,6 +23,8 @@
   $ParentItem = getPost('ParentItem');
   $Color = getPost('Color');
 	
+	include_once './panels/dbFunction.php';
+	
   $returnID = getReturnValue("tMenu","MenuName",$MenuName,"MenuID");
   if($returnID==null OR $returnID == 0)
   {
