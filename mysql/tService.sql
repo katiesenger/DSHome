@@ -11,7 +11,7 @@ ServiceID int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	
 ServiceName varchar(50) NOT NULL,
 	
-Price DECIMAL(5,2) NOT NULL,
+Price DECIMAL(9,2) NOT NULL,
 
 	ShopHours DECIMAL(5,2)  NOT NULL
 
