@@ -109,7 +109,7 @@ function getMenuItem($MenuID,$userID)
 function getMenu($requiresAuthentication, $userID)
 {
   try {
-    include_once 'dbConnect.php';
+    include_once './panels/dbConnect.php';
     $dbh = OpenConn();
     $stmt = $dbh->prepare("SELECT * FROM tMenu where RequiresAuthentication=? ORDER BY Sequence");
     if ($stmt->execute(array($requiresAuthentication))) {
