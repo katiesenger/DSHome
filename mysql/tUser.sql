@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS tUser(
 	PasswordQuestion6 nvarchar(100) NULL,
 	PasswordAnswer6 nvarchar(100) NULL,
 	LastLogin DateTime,
+	LastLogout DateTime,
 	LastPasswordChange DateTime,
 	CreationDate DateTime,
 	IsLockedOut int(1),

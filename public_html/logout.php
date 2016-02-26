@@ -16,4 +16,13 @@ if(isset($_GET['logout']))
  unset($_SESSION['user']);
  header("Location: index.php");
 }
+include_once './panels/getVariables.php';
+$userid = getUser();
+
+include_once './panels/dbConnect.php';
+		$dbh = OpenConn();
+  	$stmt = $dbh->prepare("UPDATE tUser Set LastLogout=getDate() WHERE UserID=:UserID"); 
+		$stmt->bindParam(":UserID",$userid);
+		$stmt->execute();
+		$dbh = null;
 ?>

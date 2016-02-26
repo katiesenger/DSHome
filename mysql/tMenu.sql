@@ -7,7 +7,8 @@ CREATE TABLE tMenu (
   Sequence int(11) NOT NULL,
   RequiresAuthentication int(1) NOT NULL,
   ParentItem int(11) NOT NULL,
-  Color nvarchar(10) NOT NULL 
+  Color nvarchar(10) NOT NULL,
+  QueryString nvarchar(100) NOT NULL
 );
 INSERT INTO tMenu(MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES('Index','./index.php',1,0,1,'black');
 INSERT INTO tMenu(MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES ('Login','./login.php',2,0,1,'white');

@@ -14,7 +14,7 @@
   include_once './panels/menu.php';
   echo "<div class='box'>";
   
-  $MenuID =	$MenuName = $PagePath = $Sequence = $RequiresAuthentication = $ParentItem = $Color = "";
+  $MenuID =	$MenuName = $PagePath = $Sequence = $RequiresAuthentication = $ParentItem = $Color = $QueryString = "";
   $MenuID = getPost('MenuID');
   $MenuName = getPost('MenuName');
   $PagePath = getPost('PagePath');
@@ -22,6 +22,7 @@
   $RequiresAuthentication = getPost('RequiresAuthentication');
   $ParentItem = getPost('ParentItem');
   $Color = getPost('Color');
+	$QueryString = getPost('QueryString');
 	
 	include_once './panels/dbFunction.php';
 	
@@ -29,7 +30,7 @@
   if($returnID==null OR $returnID == 0)
   {
     include_once './panels/dbMenuItem.php';
-		addMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color);		
+		addMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color,$QueryString);		
 		echo "<form method='post' name='getList' action='editMenu.php?u=$userID' autocomplete='on'>";
   	echo "<input type='hidden' name='userid' value='$userID' />";
 		echo "<input type='submit' value='Request Services'/>";
@@ -47,5 +48,5 @@
 	
   ?>
   </div>
-  <script language="JavaScript">document.getList.submit();</script>
+<script language="JavaScript">document.getList.submit();</script>
   </body></html>

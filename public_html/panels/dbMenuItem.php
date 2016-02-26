@@ -1,18 +1,18 @@
 <?php
-function addMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color)
+function addMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color,$QueryString)
 {
   
   try {
     include_once 'dbConnect.php';
     $dbh = OpenConn();
-    $stmt = $dbh->prepare("INSERT INTO tMenu (MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color) VALUES (:MenuName, :PagePath, :Sequence, :RequiresAuthentication, :ParentItem, :Color)");
+    $stmt = $dbh->prepare("INSERT INTO tMenu (MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color, QueryString) VALUES (:MenuName, :PagePath, :Sequence, :RequiresAuthentication, :ParentItem, :Color, :QueryString)");
     $stmt->bindParam(':MenuName',$MenuName);
     $stmt->bindParam(':PagePath',$PagePath);
     $stmt->bindParam(':Sequence',$Sequence);
     $stmt->bindParam(':RequiresAuthentication',$RequiresAuthentication);
     $stmt->bindParam(':ParentItem',$ParentItem);
     $stmt->bindParam(':Color',$Color);
-
+		$stmt->bindParam(':QueryString',$QueryString);
     $stmt->execute();
     $dbh = null;
 		echo "<p class='debug'>$MenuName added.</p>";
@@ -22,14 +22,14 @@ function addMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$Pare
     die();
   }
 }
-function updateMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color,$MenuID)
+function updateMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color,$MenuID, $QueryString)
 {
   
   try {
     include_once 'dbConnect.php';
     $dbh = OpenConn();
-		echo "<p class='debug'>UPDATE tMenu SET MenuName=$MenuName, PagePath=$PagePath, Sequence=$Sequence, RequiresAuthentication=$RequiresAuthentication, ParentItem=$ParentItem, Color=$Color WHERE MenuID=$MenuID</p>";
-    $stmt = $dbh->prepare("UPDATE tMenu SET MenuName=:MenuName, PagePath=:PagePath, Sequence=:Sequence, RequiresAuthentication=:RequiresAuthentication, ParentItem=:ParentItem, Color=:Color WHERE MenuID=:MenuID");
+		echo "<p class='debug'>UPDATE tMenu SET MenuName=$MenuName, PagePath=$PagePath, Sequence=$Sequence, RequiresAuthentication=$RequiresAuthentication, ParentItem=$ParentItem, Color=$Color, QueryString=$QueryString WHERE MenuID=$MenuID</p>";
+    $stmt = $dbh->prepare("UPDATE tMenu SET MenuName=:MenuName, PagePath=:PagePath, Sequence=:Sequence, RequiresAuthentication=:RequiresAuthentication, ParentItem=:ParentItem, Color=:Color, QueryString=:QueryString WHERE MenuID=:MenuID");
     $stmt->bindParam(':MenuName',$MenuName);
     $stmt->bindParam(':PagePath',$PagePath);
     $stmt->bindParam(':Sequence',$Sequence);
@@ -37,6 +37,7 @@ function updateMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$P
     $stmt->bindParam(':ParentItem',$ParentItem);
     $stmt->bindParam(':Color',$Color);
 		$stmt->bindParam(":MenuID",$MenuID);
+		$stmt->bindParam(":QueryString",$QueryString);
     $stmt->execute();
     $dbh = null;
 		echo "<p class='debug'>$MenuName updated.</p>";
@@ -89,6 +90,8 @@ function getMenuItem($MenuID,$userID)
       if($Color=="grey")
         echo " checked='checked' ";
       echo "/> grey ";
+			$QueryString=$row['QueryString'];
+			echo "<br />Query String: <input type='text' id='QueryString' name='QueryString' value='$QueryString' />";
       echo "<br /><input type='submit' name='update' value='update' />";
 			echo "</form>";
 			
@@ -111,7 +114,10 @@ function getMenu($requiresAuthentication, $userID)
     $stmt = $dbh->prepare("SELECT * FROM tMenu where RequiresAuthentication=? ORDER BY Sequence");
     if ($stmt->execute(array($requiresAuthentication))) {
     while ($row = $stmt->fetch()) {
-		  echo "<li><a href='".$row['PagePath']."?u=".$userID."' class='" . $row['Color'] . "Button'>".$row['MenuName']."</a></li>";
+			if($row['QueryString']!="" and $row['QueryString'] != null)
+				echo "<li><a href='".$row['PagePath']."?u=".$userID."&".$row['QueryString']."' class='" . $row['Color'] . "Button'>".$row['MenuName']."</a></li>";	
+			else
+			  echo "<li><a href='".$row['PagePath']."?u=".$userID."' class='" . $row['Color'] . "Button'>".$row['MenuName']."</a></li>";
 	   }
     }
       else {
@@ -129,10 +135,10 @@ function listMenu($userID)
   try {
     include_once 'dbConnect.php';
     $dbh = OpenConn();
-    $stmt = $dbh->prepare("SELECT tMenu.MenuID, tMenu.MenuName, tMenu.PagePath, tMenu.Sequence, tMenu.RequiresAuthentication, tParentMenu.MenuName as ParentItem, tMenu.Color FROM tMenu left outer join tMenu as tParentMenu on tMenu.ParentItem=tParentMenu.MenuID ORDER BY Sequence");
+    $stmt = $dbh->prepare("SELECT tMenu.MenuID, tMenu.MenuName, tMenu.PagePath, tMenu.Sequence, tMenu.RequiresAuthentication, tParentMenu.MenuName, tMenu.QueryString as ParentItem, tMenu.Color, tMenu.QueryString FROM tMenu left outer join tMenu as tParentMenu on tMenu.ParentItem=tParentMenu.MenuID ORDER BY Sequence");
     if ($stmt->execute()) {
 			echo "<h2>Menu</h2>";
-    	$fields = array("MenuID","MenuName","PagePath","Sequence","RequiresAuthentication","ParentItem","Color");
+    	$fields = array("MenuID","MenuName","PagePath","Sequence","RequiresAuthentication","ParentItem","Color","QueryString");
 			echo "<form><table class='displayData'>";
       echo "<tr><th>&nbsp;</th><th>ID</th>";
       foreach($fields as $field)

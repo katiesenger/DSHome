@@ -29,6 +29,7 @@
   echo "<input type = 'radio' name='Color' id='Color' value='black' /> black ";
   echo "<input type = 'radio' name='Color' id='Color' value='white' /> white ";
   echo "<input type = 'radio' name='Color' id='Color' value='grey' /> grey ";
+	echo "<br />Query String: <input type='text' name='QueryString' id='QueryString' />";
   echo "<br /><input type='submit' value='submit' id='submit' />";
   echo "</form>";
   echo "</div>";

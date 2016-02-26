@@ -17,7 +17,7 @@
 ?>
 	<div class='box'>
 	<?php
-  $MenuID =	$MenuName = $PagePath = $Sequence = $RequiresAuthentication = $ParentItem = $Color = "";
+  $MenuID =	$MenuName = $PagePath = $Sequence = $RequiresAuthentication = $ParentItem = $Color = $QueryString = "";
   $MenuID = getPost('MenuID');
   $MenuName = getPost('MenuName');
   $PagePath = getPost('PagePath');
@@ -25,8 +25,9 @@
   $RequiresAuthentication = getPost('RequiresAuthentication');
   $ParentItem = getPost('ParentItem');
   $Color = getPost('Color');
+	$QueryString = getPost('QueryString');
 	
-  $fields = "MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color";
+  $fields = "MenuName, PagePath, Sequence, RequiresAuthentication, ParentItem, Color, QueryString";
   
   $qString = $action = $value = $id = $filterBy = $orderBy = "";
   $qString = $_SERVER['QUERY_STRING'];
@@ -42,7 +43,7 @@
 		$MenuID=$id;
 	}
 	
-  $listQuery = "SELECT tMenu.MenuID, tMenu.MenuName, tMenu.PagePath, tMenu.Sequence, tMenu.RequiresAuthentication, tParentMenu.MenuName, tMenu.Color FROM tMenu left outer join tMenu as tParentMenu on tMenu.ParentItem=tParentMenu.MenuID";
+  $listQuery = "SELECT tMenu.MenuID, tMenu.MenuName, tMenu.PagePath, tMenu.Sequence, tMenu.RequiresAuthentication, tParentMenu.MenuName, tMenu.Color, tMenu.QueryString FROM tMenu left outer join tMenu as tParentMenu on tMenu.ParentItem=tParentMenu.MenuID";
 	
 		echo "<p class='debug'>Action: $action </p>";
   switch($action) {
@@ -63,7 +64,7 @@
 			break;
 		case "add":
 			include_once './panels/dbMenuItem.php';
-			addMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color);
+			addMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color, $QueryString);
 			reloadMenu($userID);
 			break;
 		case "select":
@@ -76,7 +77,7 @@
 			break;
 		case "edit":
 			include_once './panels/dbMenuItem.php';
-			updateMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color,$MenuID);
+			updateMenuItem($MenuName,$PagePath,$Sequence,$RequiresAuthentication,$ParentItem,$Color,$MenuID,$QueryString);
 			reloadMenu($userID);
 			break;
 	}
@@ -103,7 +104,7 @@ function orderDropDown($fields){
 		echo "</form>";
 	}
 	?>
-		<script language="JavaScript">document.getList.submit();</script>
+		<!--<script language="JavaScript">document.getList.submit();</script>-->
 </div>
 </body>
 </html>
