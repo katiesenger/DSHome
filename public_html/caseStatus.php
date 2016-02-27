@@ -3,11 +3,11 @@
 <html>
 <head>
 	<meta charset = "utf-8">
-	<title>CaseStatus Management</title>
+	<title>Case Status Management</title>
 	<link href="DSHome.css" rel="stylesheet" />
 </head>
 <body>
-	<h2>CaseStatus Management</h2>
+	<h2>Case Status Management</h2>
 <?php
 	include_once './panels/getVariables.php';
 	$userID = getUser();
@@ -85,7 +85,7 @@ function getCaseStatusItem($CaseStatusID,$userID)
 			echo "<input type='hidden' id='CaseStatusID' name='CaseStatusID' value='$CaseStatusID'>";
       echo "<input type='hidden' id='action' name='action' value='edit'/>";
       $CaseStatusName = $row['CaseStatusName'];
-      echo "<br />CaseStatus Item Name: <input type='text' name='CaseStatusName' id='CaseStatusName' value='$CaseStatusName' />";
+      echo "<br />Case Status Item Name: <input type='text' name='CaseStatusName' id='CaseStatusName' value='$CaseStatusName' />";
       echo "<br /><input type='submit' name='update' value='update' />";
 			echo "</form>";	
     }
@@ -102,7 +102,7 @@ function getCaseStatusItem($CaseStatusID,$userID)
     function showNew($userID)
     {
       echo "<form id='add' method='post' action='caseStatus.php?u=$userID&action=add' autocomplete='on' type='submit'>";
-      echo "<br />CaseStatus Item Name: <input type='text' name='CaseStatusName' id='CaseStatusName' />";
+      echo "<br />Case Status Item Name: <input type='text' name='CaseStatusName' id='CaseStatusName' />";
       echo "<br /><input type='submit' value='submit' id='submit' />";
       echo "</form>";
     }
@@ -113,10 +113,10 @@ function listCaseStatus($userID)
     $dbh = OpenConn();
     $stmt = $dbh->prepare("SELECT tCaseStatus.CaseStatusID, tCaseStatus.CaseStatusName FROM tCaseStatus ORDER BY CaseStatusName");
     if ($stmt->execute()) {
-			echo "<h2>CaseStatus</h2>";
+			echo "<h2>Case Status</h2>";
     	$fields = array("CaseStatusID","CaseStatusName");
 			echo "<form><table class='displayData'>";
-      echo "<tr><th>&nbsp;</th><th>ID</th><th>CaseStatus Name</th></tr>";
+      echo "<tr><th>&nbsp;</th><th>ID</th><th>Case Status Name</th></tr>";
     	while ($row = $stmt->fetch()) {
 				echo "<tr>";
 				echo "<td>";
@@ -183,7 +183,7 @@ function deleteCaseStatusItem($CaseStatusID)
       	listData($listQuery,$userID);
 			break;
 		case "select":
-			echo "<p class='debug'>CaseStatusID: $CaseStatusID :: ID: $id</p>";
+			echo "<p class='debug'>Case StatusID: $CaseStatusID :: ID: $id</p>";
 			if($CaseStatusID != "")
 				getCaseStatusItem($CaseStatusID,$userID);
 			else if($id != "")
@@ -208,7 +208,7 @@ function orderDropDown($fields){
 	function listData($listQuery,$userID)
 	{
 		listCaseStatus($userID);
-		echo "<br /><br /><a href='caseStatus.php?u=$userID&action=new'>Add CaseStatus Item</a>";
+		echo "<br /><br /><a href='caseStatus.php?u=$userID&action=new'>Add Case Status Item</a>";
 		
 	}
 	?>
