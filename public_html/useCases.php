@@ -157,9 +157,44 @@ function getUseCaseItem($UseCaseID,$userID)
 			caseStatusDropDown($CaseStatusID);
       echo "<br /><input type='submit' name='update' value='update' />";
 			echo "</form>";
-			
+			$dbh = null;
+			 try {
+				include_once './panels/dbConnect.php';
+				$dbh = OpenConn();
+				$stmt = $dbh->prepare("SELECT tTestCase.*, tPriority.PriorityName FROM tTestCase left outer join tPriority ON tTestCase.PriorityID=tPriority.PriorityID WHERE UseCaseID=:UseCaseID ORDER BY TestCaseDescription");
+				$stmt->bindParam(":UseCaseID",$UseCaseID);
+    		if ($stmt->execute()) {
+					echo "<h2>Test Cases for Use Case</h2>";
+    			$fields = array("TestCaseID", "TestCaseDescription","DateLogged","DateTested","PreaparedBy","TestedBy","PriorityName");
+					echo "<form><table class='displayData'>";
+					echo "<tr><th>&nbsp;</th><th>ID</th>";
+					foreach($fields as $field)
+					{
+						echo "<th>$field</th>";
+					}
+					echo "</tr>";
+					while ($row = $stmt->fetch()) {
+						echo "<tr>";
+						echo "<td>";
+						echo "<a href='testCase.php?u=".$userID."&i=".$row['TestCaseID']."&action=select'>Edit</a> ";
+						echo "<a href='testCase.php?u=".$userID."&i=".$row['TestCaseID']."&action=delete'>Delete</a> ";
+						echo "</td>";
+						foreach($fields as $field)
+						{
+							echo "<td>$row[$field]</td>";
+						}
+					}
+				}
+			$dbh = null;
+				 }
+
+  catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+  }
     }
-    $dbh = null;
+			
+    
   }
   }
 
