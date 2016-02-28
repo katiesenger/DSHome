@@ -111,4 +111,22 @@ function caseStatusDropDown($selected)
 		else{echo "Broken";}
 	$dbh=null;
 }
- ?>
+function useCaseDropdown($selected)
+{
+	include_once 'dbConnect.php';
+	$dbh = OpenConn();
+	$stmt = $dbh->prepare("SELECT useCaseID, UseCaseTitle FROM tUseCase WHERE UseCaseTitle IS NOT NULL ORDER BY UseCaseTitle");
+	if ($stmt->execute()) {
+		echo "<select name='useCaseID' required=true>";
+		while ($row = $stmt->fetch()) {
+			echo "<option value='".$row['useCaseID']."' ";
+			if($selected==$row['UseCaseTitle'])
+				echo "selected=true ";
+		echo ">".$row['UseCaseTitle']."</option>";
+		}
+	echo "</select>\n";
+	}
+		else{echo "Broken";}
+	$dbh=null;
+}
+?>
