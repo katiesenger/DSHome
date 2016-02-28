@@ -62,7 +62,7 @@
 	$stmt->bindParam(':UserID',$UserID);
 	$stmt->execute();
 	$results = $stmt->fetch(PDO::FETCH_ASSOC);
- 	if(count($results) > 0 && $password===$results['UPassword']) // password_verify($password, $results['UPassword']))
+ 	if(count($results) > 0) // password_verify($password, $results['UPassword']))
 	{
 		$userid=$results['UserID'];
 		if ($Pass1===$Pass2)
@@ -127,7 +127,7 @@
     echo "<input type='submit' value='View Profile'/>";
     echo "</form>";
     ?>
-    <!--    <script language="JavaScript">document.getList.submit();</script>-->
+    <script language="JavaScript">document.getList.submit();</script>
         <p class='debug'>End Test</p>
 
 </body>

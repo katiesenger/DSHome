@@ -56,8 +56,8 @@ function addUseCaseItem($UseCaseTitle, $UseCaseDescription, $PrimaryActor, $Alte
   try {
     include_once './panels/dbConnect.php';
     $dbh = OpenConn();
-    $stmt = $dbh->prepare("INSERT INTO tUseCase (UseCaseTitle, UseCaseDescription, PrimaryActor, AlternateActors, PreRequisits, PostConditions, MainPathSteps, AlternatePathSteps, SuccessCriteria, PotentialFailures, FrequencyOfUse, OwnerUserID, PriorityID, CaseStatusID) VALUES (:UseCaseTitle, :UseCaseDescription, :PrimaryActor, :AlternateActors, :PreRequisits, :PostConditions, :MainPathSteps, :AlternatePathSteps, :SuccessCriteria, :PotentialFailures, :FrequencyOfUse, :OwnerUserID, :PriorityID, :CaseStatusID)");    $stmt->bindParam(':UseCaseName',$UseCaseName);
-    $stmt->bindParam(':UseCaseTitle',$UseCaseTitle);
+    $stmt = $dbh->prepare("INSERT INTO tUseCase (UseCaseTitle, UseCaseDescription, PrimaryActor, AlternateActors, PreRequisits, PostConditions, MainPathSteps, AlternatePathSteps, SuccessCriteria, PotentialFailures, FrequencyOfUse, OwnerUserID, PriorityID, CaseStatusID) VALUES (:UseCaseTitle, :UseCaseDescription, :PrimaryActor, :AlternateActors, :PreRequisits, :PostConditions, :MainPathSteps, :AlternatePathSteps, :SuccessCriteria, :PotentialFailures, :FrequencyOfUse, :OwnerUserID, :PriorityID, :CaseStatusID)");    
+		$stmt->bindParam(':UseCaseTitle',$UseCaseTitle);
     $stmt->bindParam(':UseCaseDescription',$UseCaseDescription);
     $stmt->bindParam(':PrimaryActor',$PrimaryActor);
     $stmt->bindParam(':AlternateActors',$AlternateActors);
@@ -73,7 +73,7 @@ function addUseCaseItem($UseCaseTitle, $UseCaseDescription, $PrimaryActor, $Alte
     $stmt->bindParam(':CaseStatusID',$CaseStatusID);
     $stmt->execute();
     $dbh = null;
-		echo "<p class='debug'>$UseCaseName added.</p>";
+		echo "<p class='debug'>$UseCaseTitle added.</p>";
   }
   catch (PDOException $e) {
     print "Error!: " . $e->getMessage() . "<br/>";
@@ -146,12 +146,15 @@ function getUseCaseItem($UseCaseID,$userID)
       $FrequencyOfUse=$row['FrequencyOfUse'];	
       echo "<br />FrequencyOfUse: <input type='text' name='FrequencyOfUse' id='FrequencyOfUse' value='$FrequencyOfUse' />";
       $OwnerUserID=$row['OwnerUserID'];	
-      include_once 'getDropdown.php';
-      dropdown("tUser",$OwnerUserID);
+      include_once './panels/getDropdown.php';
+      echo "<br />Owner User ID:";
+			userDropdown($OwnerUserID,"Owner User");
       $PriorityID=$row['PriorityID'];	
-      dropdown("tPriority",$PriorityID);
+      echo "<br />Priority: ";
+			priorityDropDown($PriorityID);
       $CaseStatusID=$row['CaseStatusID'];	
-      dropdown("tCaseStatus",$CaseStatusID);
+      echo "<br />Status: ";
+			caseStatusDropDown($CaseStatusID);
       echo "<br /><input type='submit' name='update' value='update' />";
 			echo "</form>";
 			
@@ -181,9 +184,12 @@ function getUseCaseItem($UseCaseID,$userID)
       echo "<br />PotentialFailures: <input type='text' name='PotentialFailures' id='PotentialFailures' />";
       echo "<br />FrequencyOfUse: <input type='text' name='FrequencyOfUse' id='FrequencyOfUse' />";
       include_once './panels/getDropdown.php';
-      dropdown("tUser",null);
-      dropdown("tPriority",null);
-      dropdown("tCaseStatus",null);
+      echo "<br />Owner User ID: ";
+			userDropdown(null);
+      echo "<br />Priority: ";
+			priorityDropDown(null);
+      echo "<br />Status: ";
+			caseStatusDropDown(null);
       echo "<br /><input type='submit' value='submit' id='submit' />";
       echo "</form>";
     }
@@ -192,10 +198,12 @@ function listUseCase($userID)
   try {
     include_once './panels/dbConnect.php';
     $dbh = OpenConn();
-    $stmt = $dbh->prepare("SELECT tUseCaseID.UseCaseID, tUseCase.UseCaseTitle, tUseCase.UseCaseDescription, tUseCase.PrimaryActor, tUseCase.AlternateActors, tUseCase.PreRequisits, tUseCase.PostConditions, tUseCase.MainPathSteps, tUseCase.AlternatePathSteps, tUseCase.SuccessCriteria, tUseCase.PotentialFailures, tUseCase.FrequencyOfUse, tUser.UserID as OwnerUserID, tPriority.PriorityID, tCaseStatus.CaseStatusID, FROM tUseCase left outer join tUser on tUseCaseID.OwnerUserID = tUser.UserID left outer join tPriority on tUseCase.PriorityID=tPriority.PriorityID left outer join tCaseStatus on tUseCase.CaseStatusID = tCaseStatus.CaseStatusID");
+    //$stmt = $dbh->prepare("select tUseCase.*,tPriority.PriorityName,tCaseStatus.CaseStatusName, tUser.UserName as OwnerUserName FROM tUseCase left outer join tPriority on tUseCase.PriorityID=tPriority.PriorityID left outer join tCaseStatus on tUseCase.CaseStatusID=tCaseStatus.CaseStatusID left outer join tUser on tUseCase.OwnerUserID=tUser.UserID");
+		$stmt = $dbh->prepare("select tUseCase.UseCaseID, tUseCase.UseCaseTitle, tUseCase.UseCaseDescription from tUseCase");
     if ($stmt->execute()) {
       echo "<h2>UseCase</h2>";
-    	$fields = array("UseCaseID", "UseCaseTitle", "UseCaseDescription", "PrimaryActor", "AlternateActors", "PreRequisits", "PostConditions", "MainPathSteps", "AlternatePathSteps", "SuccessCriteria", "PotentialFailures", "FrequencyOfUse", "OwnerUserID", "PriorityID", "CaseStatusID");
+    	//$fields = array("UseCaseID", "UseCaseTitle", "UseCaseDescription", "PrimaryActor", "AlternateActors", "PreRequisits", "PostConditions", "MainPathSteps", "AlternatePathSteps", "SuccessCriteria", "PotentialFailures", "FrequencyOfUse", "OwnerUserID", "PriorityID", "CaseStatusID");
+			$fields = array("UseCaseID","UseCaseTitle","UseCaseDescription");
 			echo "<form><table class='displayData'>";
       echo "<tr><th>&nbsp;</th><th>ID</th>";
       foreach($fields as $field)
