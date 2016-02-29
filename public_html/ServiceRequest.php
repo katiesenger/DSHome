@@ -46,7 +46,7 @@ $servicesQuery = "SELECT ServiceID, ServiceName, Price, ShopHours FROM tService"
 	else {
 		echo "<p class='error'> No Services available.</p>";
 	}
-	$requestedServices = "SELECT tUserService.UserServiceID, tService.ServiceName, tUserService.DateRequested, tUserService.DateComplete, tUserService.InvoiceID FROM tUserService inner join tService on tUserService.ServiceID=tService.ServiceID WHERE tUserService.UserID=:userID and (tUserService.InvoiceID <> 0 or tUserService.InvoiceID is null)";
+	$requestedServices = "SELECT tUserService.UserServiceID, tService.ServiceName, tUserService.DateRequested, tUserService.DateSubmitted, tUserService.DateComplete, tUserService.InvoiceID FROM tUserService inner join tService on tUserService.ServiceID=tService.ServiceID WHERE tUserService.UserID=:userID and (tUserService.InvoiceID <> 0 or tUserService.InvoiceID is null)";
 	echo "<p class='debug'>$requestedServices</p>";
 	$dbh = OpenConn();
   $stmt = $dbh->prepare($requestedServices); 
@@ -57,7 +57,7 @@ $servicesQuery = "SELECT ServiceID, ServiceName, Price, ShopHours FROM tService"
 	{
 		echo "<h3>Requested Services</h3>";
 		echo "<table class='displayData'>";
-		echo "<tr><th>ID</th><th>Service Name</th><th>Date Requested</th><th>Date Completed</th><th>Invoice</th></tr>";
+		echo "<tr><th>ID</th><th>Service Name</th><th>Date Requested</th><th>Date Submitted</th><th>Date Completed</th><th>Invoice</th></tr>";
 		while ($row = $stmt->fetch()) {
 		    echo "<tr>";
 		    echo "<td><input type='hidden' name='serviceid' value='".$row['UserServiceID']."' />";
@@ -65,6 +65,7 @@ $servicesQuery = "SELECT ServiceID, ServiceName, Price, ShopHours FROM tService"
 		    echo "<a href='cancelService.php?s=".$row['UserServiceID']."&u=$userID'>Cancel</a></td>";
 		    echo "<td>".$row['ServiceName']."</td>";
 		    echo "<td>".$row['DateRequested']."</td>";
+				echo "<td>".$row['DateSubmitted']."</td>";
 		    echo "<td>".$row['DateComplete']."</td>";
 		    echo "<td>".$row['InvoiceID']."</td>";
 		    echo "</tr>\n";
@@ -72,9 +73,9 @@ $servicesQuery = "SELECT ServiceID, ServiceName, Price, ShopHours FROM tService"
 		echo "</form></table>";
 		$dbh = null;
 	}
-	print("<form method='post' name='getList' action='mailform.php' autocomplete='on'>");
+	print("<form method='post' name='getList' action='submitService.php?u=$userID' autocomplete='on'>");
 	print("<input type='hidden' name='userid' value='$userID' />");
-	print("<input type='submit' value='Request Services'/>");
+	print("<input type='submit' value='Submit Request For Services'/>");
 	print("</form>");
 		
 	?>

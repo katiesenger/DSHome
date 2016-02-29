@@ -4,7 +4,7 @@
 
 		<br />User Name:<input type="text" name="username" />
 
-		<br />Password: <input type="password" name="password" />
+		<br />Password: <input type="password" name="password" /><a href="forgotPassword.php">Forgot Password</a>
 
 		<br /><input type="submit" />
 	</form>
