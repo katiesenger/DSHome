@@ -65,7 +65,7 @@
 		 echo "<h2>Password Reset Feature</h2>";
       $UserID=$results['UserID'];
       echo "<form method='post' name='resetPassword' action='resetPassword.php?$userID' autocomplete='on'>";
-		 	echo " <input type='hidden' name='userid' value='$userID' />";
+		 	echo " <input type='text' name='userid' value='$userID' /><input type='text' name='username' value='$username' />'";
 		  echo "<br />".$results["PasswordQuestion".$q1].": <input type='text' name='PasswordResponse$q1' /> <input type='hidden' name='PasswordAnswer$q1' value='".$results["PasswordAnswer".$q1]."' />";
       echo "<br />".$results["PasswordQuestion".$q2].": <input type='text' name='PasswordResponse$q2' /> <input type='hidden' name='PasswordAnswer$q2' value='".$results["PasswordAnswer".$q2]."' />";
       echo "<br />".$results["PasswordQuestion".$q3].": <input type='text' name='PasswordResponse$q3' /> <input type='hidden' name='PasswordAnswer$q3' value='".$results["PasswordAnswer".$q3]."' />";
