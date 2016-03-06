@@ -82,4 +82,10 @@ function updateValue($table,$setColumn,$setValue,$checkColumn,$checkValue){
 	}
 	$dbh = null;
 	}
+function camelToTitle($camelCaseString)
+    {
+     $re = '/(?<=[a-z])(?=[A-Z])/x';
+        $a = preg_split($re, $camelCaseString);
+        return join($a, " " );
+    }
 ?>
