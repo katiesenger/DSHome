@@ -213,7 +213,7 @@ function makeFilterDropdown($valueList,$selected)
 	}
 echo "</select>";
 }
-function listTestCase($userID, $listQuery)
+function listTestCase($userID, $listQuery,$action)
 {
   try {
     include_once './panels/dbConnect.php';
@@ -390,7 +390,7 @@ function deleteTestCaseItem($TestCaseID)
   switch($action) {
 		case "list":
 			$listQuery = $listQuery . "ORDER BY TestCaseDescription";
-      	listData($userID, $listQuery);
+      	listData($userID, $listQuery,$action);
 			break;
 		case "sort":
 			$listQuery = $listQuery . " ORDER BY :columnName";
@@ -406,14 +406,14 @@ function deleteTestCaseItem($TestCaseID)
       break;
 		case "delete":
 			deleteTestCaseItem($TestCaseID);
-      	listData($userID, $listQuery);
+      	listData($userID, $listQuery,$action);
 			break;
     case "new":
       showNew($userID);
       break;
 		case "add":
 			addTestCaseItem($TestCaseDescription, $DateLogged, $DateTested, $PreaparedBy, $TestedBy, $Module, $FeatureName, $UseCaseID, $TestData, $TestSteps, $ExpectedResults, $ActualResults, $Pass, $PriorityID);
-      	listData($userID, $listQuery);
+      	listData($userID, $listQuery,$action);
 			break;
 		case "select":
 			echo "<p class='debug'>TestCaseID: $TestCaseID :: ID: $id</p>";
@@ -424,10 +424,10 @@ function deleteTestCaseItem($TestCaseID)
 			break;
 		case "edit":
 			updateTestCaseItem($TestCaseID, $TestCaseDescription, $DateLogged, $DateTested, $PreaparedBy, $TestedBy, $Module, $FeatureName, $UseCaseID, $TestData, $TestSteps, $ExpectedResults, $ActualResults, $Pass, $PriorityID);
-      	listData($userID, $listQuery);
+      	listData($userID, $listQuery,$action);
 			break;
     case "":
-      listData($userID, $listQuery);
+      listData($userID, $listQuery,$action);
       break;
 	}
     function filterDropDown($fields){
@@ -438,9 +438,9 @@ function orderDropDown($fields){
   dropdownFields($fields,"Order By","orderBy",$orderBy);
 }
 
-	function listData($userID, $listQuery)
+	function listData($userID, $listQuery,$action)
 	{
-		listTestCase($userID, $listQuery);
+		listTestCase($userID, $listQuery,$action);
 		echo "<br /><br /><a href='testCase.php?u=$userID&action=new'>Add TestCase Item</a>";
 		
 	}
