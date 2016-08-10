@@ -6,5 +6,6 @@ CREATE TABLE tEmail(
   CcEmail nvarchar(255) NULL,
   Subject nvarchar(255) NOT NULL,
   DateSent DateTime NOT NULL,
-  EmailBody nvarchar(max) NOT NULL 
+  EmailBody nvarchar(max) NOT NULL,
+  SentBy int(11) NOT NULL
 );
