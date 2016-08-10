@@ -27,7 +27,21 @@
   $headers .= "CC: $ccEmail " . "\r\n";
   
   mailto($toEmail, $subject, $body, $headers);
+
+
   
+	$insertString = "INSERT INTO tEmail (ToEmail, CcEmail, Subject, Body, DateSent, SentBy) Values(:ToEmail, :CcEmail, :Subject, :Body, now(), :UserID);
+        echo "<p class='debug'>Query: $insertString </p>";
+	include_once './panels/dbConnect.php';
+	$dbh = OpenConn();
+  $stmt = $dbh->prepare($insertString); 
+	$stmt->bindParam(":ToEmail", $toEmail);
+        $stmt->bindParam(":CcEmail", $ccEmail);
+        $stmt->bindParam(":Subject", $subject);
+        $stmt->bindParam(":Body", $body);
+        $stmt->bindParam(":UserID", $UserID);
+	$stmt->execute();
+	$dbh=null;
 ?>
 <script language="JavaScript">document.getList.submit();</script>
 </body>
